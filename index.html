@@ -1,0 +1,2333 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TaskFlow Pro — مدير مهامك</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0c10;
+    --bg2: #0f1117;
+    --bg3: #161b24;
+    --surface: #1a2030;
+    --surface2: #212840;
+    --border: rgba(99,120,200,0.15);
+    --border2: rgba(99,120,200,0.25);
+    --accent: #4f7cff;
+    --accent2: #7c5cfc;
+    --accent3: #00e5a0;
+    --accent4: #ff6b6b;
+    --accent5: #ffb84d;
+    --text: #e8ecf5;
+    --text2: #8892a4;
+    --text3: #5a6478;
+    --gold: #ffd700;
+    --platinum: #e5e8ef;
+    --r: 14px;
+    --r2: 20px;
+    --shadow: 0 8px 40px rgba(0,0,0,0.5);
+    --glow: 0 0 30px rgba(79,124,255,0.2);
+    --theme-primary: #4f7cff;
+    --theme-secondary: #7c5cfc;
+    --theme-glow-r: 79;
+    --theme-glow-g: 124;
+    --theme-glow-b: 255;
+  }
+
+  /* ══ THEMES ══ */
+  body.theme-pink {
+    --accent: #ff5fa0;
+    --accent2: #d946a8;
+    --border: rgba(255,95,160,0.15);
+    --border2: rgba(255,95,160,0.28);
+    --surface: #1e1520;
+    --surface2: #261830;
+    --bg: #0d0810;
+    --bg2: #110d14;
+    --bg3: #180f1e;
+    --glow: 0 0 30px rgba(255,95,160,0.2);
+    --theme-primary: #ff5fa0;
+    --theme-secondary: #d946a8;
+  }
+  body.theme-pink .logo-icon,
+  body.theme-pink .btn-primary { background:linear-gradient(135deg,#ff5fa0,#d946a8) !important; box-shadow:0 4px 20px rgba(255,95,160,0.4) !important; }
+  body.theme-pink .nav-item.active { background:rgba(255,95,160,0.12) !important; color:#ff5fa0 !important; border-color:rgba(255,95,160,0.2) !important; }
+  body.theme-pink .xp-level { background:rgba(255,95,160,0.12) !important; color:#ff5fa0 !important; }
+  body.theme-pink .xp-bar-fill { background:linear-gradient(90deg,#ff5fa0,#d946a8) !important; }
+  body.theme-pink .stat-card.s1::before { background:linear-gradient(90deg,#ff5fa0,#d946a8) !important; }
+  body.theme-pink #todayBar { background:linear-gradient(90deg,#ff5fa0,#d946a8) !important; }
+  body.theme-pink .topbar-title span { color:#ff5fa0 !important; }
+  body.theme-pink #bigXPBar { background:linear-gradient(90deg,#ff5fa0,#d946a8) !important; }
+  body.theme-pink .bar-fill { background:linear-gradient(180deg,#ff5fa0,#d946a8) !important; }
+  body.theme-pink body::before { background: radial-gradient(ellipse 80% 50% at 20% 20%, rgba(255,95,160,0.08) 0%, transparent 60%), radial-gradient(ellipse 60% 40% at 80% 80%, rgba(217,70,168,0.07) 0%, transparent 60%) !important; }
+
+  body.theme-green {
+    --accent: #00e5a0;
+    --accent2: #00c97a;
+    --border: rgba(0,229,160,0.15);
+    --border2: rgba(0,229,160,0.28);
+    --surface: #0d1e18;
+    --surface2: #112419;
+    --bg: #080e0c;
+    --bg2: #0b1310;
+    --bg3: #0f1a15;
+  }
+  body.theme-green .logo-icon,
+  body.theme-green .btn-primary { background:linear-gradient(135deg,#00e5a0,#00c97a) !important; box-shadow:0 4px 20px rgba(0,229,160,0.35) !important; color:#000 !important; }
+  body.theme-green .nav-item.active { background:rgba(0,229,160,0.1) !important; color:#00e5a0 !important; border-color:rgba(0,229,160,0.2) !important; }
+  body.theme-green .xp-level { background:rgba(0,229,160,0.1) !important; color:#00e5a0 !important; }
+  body.theme-green .xp-bar-fill { background:linear-gradient(90deg,#00e5a0,#00c97a) !important; }
+  body.theme-green .topbar-title span { color:#00e5a0 !important; }
+  body.theme-green #bigXPBar, body.theme-green #todayBar { background:linear-gradient(90deg,#00e5a0,#00c97a) !important; }
+
+  body.theme-orange {
+    --accent: #ff8c42;
+    --accent2: #ff5500;
+    --border: rgba(255,140,66,0.15);
+    --border2: rgba(255,140,66,0.28);
+    --surface: #1e1510;
+    --surface2: #271c12;
+    --bg: #0e0a07;
+    --bg2: #130e09;
+    --bg3: #1a120c;
+  }
+  body.theme-orange .logo-icon,
+  body.theme-orange .btn-primary { background:linear-gradient(135deg,#ff8c42,#ff5500) !important; box-shadow:0 4px 20px rgba(255,140,66,0.35) !important; }
+  body.theme-orange .nav-item.active { background:rgba(255,140,66,0.1) !important; color:#ff8c42 !important; border-color:rgba(255,140,66,0.2) !important; }
+  body.theme-orange .xp-level { background:rgba(255,140,66,0.1) !important; color:#ff8c42 !important; }
+  body.theme-orange .xp-bar-fill { background:linear-gradient(90deg,#ff8c42,#ff5500) !important; }
+  body.theme-orange .topbar-title span { color:#ff8c42 !important; }
+  body.theme-orange #bigXPBar, body.theme-orange #todayBar { background:linear-gradient(90deg,#ff8c42,#ff5500) !important; }
+
+  body.theme-cyan {
+    --accent: #00d4ff;
+    --accent2: #0099e6;
+    --border: rgba(0,212,255,0.15);
+    --border2: rgba(0,212,255,0.28);
+    --surface: #0d1820;
+    --surface2: #112030;
+    --bg: #070c10;
+    --bg2: #0a1015;
+    --bg3: #0e161e;
+  }
+  body.theme-cyan .logo-icon,
+  body.theme-cyan .btn-primary { background:linear-gradient(135deg,#00d4ff,#0099e6) !important; box-shadow:0 4px 20px rgba(0,212,255,0.35) !important; }
+  body.theme-cyan .nav-item.active { background:rgba(0,212,255,0.1) !important; color:#00d4ff !important; border-color:rgba(0,212,255,0.2) !important; }
+  body.theme-cyan .xp-level { background:rgba(0,212,255,0.1) !important; color:#00d4ff !important; }
+  body.theme-cyan .xp-bar-fill { background:linear-gradient(90deg,#00d4ff,#0099e6) !important; }
+  body.theme-cyan .topbar-title span { color:#00d4ff !important; }
+  body.theme-cyan #bigXPBar, body.theme-cyan #todayBar { background:linear-gradient(90deg,#00d4ff,#0099e6) !important; }
+
+  body.theme-gold {
+    --accent: #ffd700;
+    --accent2: #ff9500;
+    --border: rgba(255,215,0,0.15);
+    --border2: rgba(255,215,0,0.28);
+    --surface: #1e1a0a;
+    --surface2: #26210c;
+    --bg: #0e0c06;
+    --bg2: #131008;
+    --bg3: #1a150a;
+  }
+  body.theme-gold .logo-icon,
+  body.theme-gold .btn-primary { background:linear-gradient(135deg,#ffd700,#ff9500) !important; box-shadow:0 4px 20px rgba(255,215,0,0.35) !important; color:#000 !important; }
+  body.theme-gold .nav-item.active { background:rgba(255,215,0,0.1) !important; color:#ffd700 !important; border-color:rgba(255,215,0,0.2) !important; }
+  body.theme-gold .xp-level { background:rgba(255,215,0,0.1) !important; color:#ffd700 !important; }
+  body.theme-gold .xp-bar-fill { background:linear-gradient(90deg,#ffd700,#ff9500) !important; }
+  body.theme-gold .topbar-title span { color:#ffd700 !important; }
+  body.theme-gold #bigXPBar, body.theme-gold #todayBar { background:linear-gradient(90deg,#ffd700,#ff9500) !important; }
+
+  body.theme-purple {
+    --accent: #c084fc;
+    --accent2: #a855f7;
+    --border: rgba(192,132,252,0.15);
+    --border2: rgba(192,132,252,0.28);
+    --surface: #170f20;
+    --surface2: #1f1428;
+    --bg: #0c080f;
+    --bg2: #100b14;
+    --bg3: #160f1c;
+  }
+  body.theme-purple .logo-icon,
+  body.theme-purple .btn-primary { background:linear-gradient(135deg,#c084fc,#a855f7) !important; box-shadow:0 4px 20px rgba(192,132,252,0.35) !important; }
+  body.theme-purple .nav-item.active { background:rgba(192,132,252,0.1) !important; color:#c084fc !important; border-color:rgba(192,132,252,0.2) !important; }
+  body.theme-purple .xp-level { background:rgba(192,132,252,0.1) !important; color:#c084fc !important; }
+  body.theme-purple .xp-bar-fill { background:linear-gradient(90deg,#c084fc,#a855f7) !important; }
+  body.theme-purple .topbar-title span { color:#c084fc !important; }
+  body.theme-purple #bigXPBar, body.theme-purple #todayBar { background:linear-gradient(90deg,#c084fc,#a855f7) !important; }
+
+  /* ══ LIGHT / WHITE THEMES ══ */
+  body.theme-white {
+    --bg: #f0f2f7;
+    --bg2: #f7f8fc;
+    --bg3: #eceef5;
+    --surface: #ffffff;
+    --surface2: #f0f2f8;
+    --border: rgba(100,116,180,0.15);
+    --border2: rgba(100,116,180,0.28);
+    --accent: #4f7cff;
+    --accent2: #7c5cfc;
+    --accent3: #00b87a;
+    --accent4: #e8455a;
+    --accent5: #f59e0b;
+    --text: #1a1f36;
+    --text2: #4a5270;
+    --text3: #8892b0;
+    --gold: #d97706;
+    --shadow: 0 4px 24px rgba(100,116,180,0.12);
+  }
+  body.theme-white body::before { display:none; }
+  body.theme-white .sidebar { background:linear-gradient(180deg,#ffffff,#f5f7fc); border-left:1px solid rgba(100,116,180,0.12); }
+  body.theme-white .topbar { background:rgba(247,248,252,0.92); border-bottom:1px solid rgba(100,116,180,0.12); }
+  body.theme-white .task-item { background:#fff; }
+  body.theme-white .task-item:hover { background:#f5f7fc; }
+  body.theme-white .modal { background:#fff; }
+  body.theme-white .field input,
+  body.theme-white .field select,
+  body.theme-white .field textarea { background:#f0f2f7; color:#1a1f36; }
+  body.theme-white .chart-card { background:#fff; }
+  body.theme-white .settings-card { background:#fff; }
+  body.theme-white .nav-item:hover { background:#f0f2f7; color:#1a1f36; }
+  body.theme-white .nav-item.active { background:rgba(79,124,255,0.1); color:#4f7cff; border-color:rgba(79,124,255,0.2); }
+  body.theme-white .xp-widget { background:#f0f2f7; }
+  body.theme-white .logo-icon { background:linear-gradient(135deg,#4f7cff,#7c5cfc); }
+  body.theme-white .btn-primary { background:linear-gradient(135deg,#4f7cff,#7c5cfc); box-shadow:0 4px 16px rgba(79,124,255,0.3); }
+  body.theme-white .btn-ghost { background:#f0f2f7; color:#4a5270; border-color:rgba(100,116,180,0.2); }
+  body.theme-white .btn-ghost:hover { background:#e5e8f2; color:#1a1f36; }
+  body.theme-white .filter-btn { background:#f0f2f7; color:#4a5270; border-color:rgba(100,116,180,0.2); }
+  body.theme-white .filter-btn.active { background:rgba(79,124,255,0.1); color:#4f7cff; }
+  body.theme-white .nav-badge { background:#e8455a; }
+  body.theme-white .nav-badge.green { background:#00b87a; color:#fff; }
+  body.theme-white .stat-card { background:#fff; }
+  body.theme-white .notif-item { background:#fff; }
+  body.theme-white .level-card { background:#fff; }
+  body.theme-white .ach-card { background:#fff; }
+  body.theme-white .xp-bar-fill { background:linear-gradient(90deg,#4f7cff,#7c5cfc); }
+  body.theme-white .xp-level { background:rgba(79,124,255,0.1); color:#4f7cff; }
+  body.theme-white .streak-day { border-color:rgba(100,116,180,0.15); color:#8892b0; }
+  body.theme-white .streak-day.completed { background:rgba(0,184,122,0.15); border-color:rgba(0,184,122,0.3); color:#00b87a; }
+  body.theme-white .streak-day.has-tasks { background:rgba(79,124,255,0.1); border-color:rgba(79,124,255,0.25); color:#4f7cff; }
+  body.theme-white .toast { background:#fff; border-color:rgba(100,116,180,0.2); color:#1a1f36; box-shadow:0 4px 24px rgba(100,116,180,0.15); }
+  body.theme-white #bigXPBar, body.theme-white #todayBar { background:linear-gradient(90deg,#4f7cff,#7c5cfc); }
+
+  /* ══ THEME: وردي مع أبيض (White + Pink) ══ */
+  body.theme-rose {
+    --bg: #fff0f5;
+    --bg2: #ffffff;
+    --bg3: #ffe4ee;
+    --surface: #ffffff;
+    --surface2: #fff5f8;
+    --border: rgba(255,105,160,0.18);
+    --border2: rgba(255,105,160,0.32);
+    --accent: #ff4d8d;
+    --accent2: #e0186a;
+    --accent3: #0ea874;
+    --accent4: #e85252;
+    --accent5: #f59e0b;
+    --text: #2a0a18;
+    --text2: #7a3050;
+    --text3: #c090a8;
+    --gold: #c07830;
+    --shadow: 0 4px 28px rgba(255,105,160,0.14);
+  }
+  body.theme-rose {
+    background: #fff0f5 !important;
+  }
+  body.theme-rose body::before {
+    background:
+      radial-gradient(ellipse 70% 50% at 10% 10%, rgba(255,180,210,0.35) 0%, transparent 55%),
+      radial-gradient(ellipse 60% 50% at 90% 80%, rgba(255,150,200,0.25) 0%, transparent 55%),
+      radial-gradient(ellipse 40% 40% at 50% 50%, rgba(255,220,235,0.2) 0%, transparent 60%) !important;
+  }
+  body.theme-rose .sidebar {
+    background: linear-gradient(180deg, #ffffff 0%, #fff0f5 100%);
+    border-left: 1px solid rgba(255,105,160,0.15);
+    box-shadow: -2px 0 20px rgba(255,105,160,0.06);
+  }
+  body.theme-rose .topbar {
+    background: rgba(255,255,255,0.88);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255,105,160,0.15);
+  }
+  body.theme-rose .logo-icon {
+    background: linear-gradient(135deg,#ff4d8d,#e0186a) !important;
+    box-shadow: 0 4px 20px rgba(255,77,141,0.4) !important;
+  }
+  body.theme-rose .logo-text { color: #2a0a18; }
+  body.theme-rose .logo-sub  { color: #c090a8; }
+  body.theme-rose .xp-widget {
+    background: linear-gradient(135deg,#fff5f8,#ffe4ee);
+    border: 1px solid rgba(255,105,160,0.2);
+  }
+  body.theme-rose .xp-level { background:rgba(255,77,141,0.12) !important; color:#ff4d8d !important; }
+  body.theme-rose .xp-bar-fill { background:linear-gradient(90deg,#ff4d8d,#e0186a) !important; }
+  body.theme-rose .xp-bar-wrap { background: rgba(255,105,160,0.1); }
+  body.theme-rose .nav-label { color: #c090a8; }
+  body.theme-rose .nav-item { color: #7a3050; }
+  body.theme-rose .nav-item:hover { background: #fff0f5; color: #2a0a18; border-color: transparent; }
+  body.theme-rose .nav-item.active { background:rgba(255,77,141,0.1) !important; color:#ff4d8d !important; border-color:rgba(255,77,141,0.25) !important; }
+  body.theme-rose .nav-badge { background:#ff4d8d; }
+  body.theme-rose .nav-badge.green { background:#0ea874; color:#fff; }
+  body.theme-rose .topbar-title { color: #2a0a18; }
+  body.theme-rose .topbar-title span { color:#ff4d8d !important; }
+  body.theme-rose .btn-primary { background:linear-gradient(135deg,#ff4d8d,#e0186a) !important; box-shadow:0 4px 18px rgba(255,77,141,0.35) !important; color:#fff !important; }
+  body.theme-rose .btn-ghost { background:#fff0f5; color:#7a3050; border:1px solid rgba(255,105,160,0.25); }
+  body.theme-rose .btn-ghost:hover { background:#ffe4ee; color:#2a0a18; }
+  /* Cards & surfaces */
+  body.theme-rose .stat-card,
+  body.theme-rose .task-item,
+  body.theme-rose .chart-card,
+  body.theme-rose .settings-card,
+  body.theme-rose .level-card,
+  body.theme-rose .ach-card,
+  body.theme-rose .notif-item { background:#ffffff; border-color:rgba(255,105,160,0.16); }
+  body.theme-rose .task-item:hover { background:#fff8fb; border-color:rgba(255,105,160,0.3); }
+  body.theme-rose .task-item.overdue { background:rgba(232,82,82,0.04); border-color:rgba(232,82,82,0.2); }
+  body.theme-rose .notif-item.unread { background:rgba(255,77,141,0.04); border-color:rgba(255,77,141,0.2); }
+  body.theme-rose .modal { background:#ffffff; border-color:rgba(255,105,160,0.25); }
+  body.theme-rose .modal-title { color:#2a0a18; }
+  body.theme-rose .section-title { color:#2a0a18; }
+  body.theme-rose .section-count { background:#fff0f5; color:#c090a8; border-color:rgba(255,105,160,0.2); }
+  body.theme-rose .field label { color:#c090a8; }
+  body.theme-rose .field input,
+  body.theme-rose .field select,
+  body.theme-rose .field textarea { background:#fff5f8; border-color:rgba(255,105,160,0.2); color:#2a0a18; }
+  body.theme-rose .field input:focus,
+  body.theme-rose .field select:focus,
+  body.theme-rose .field textarea:focus { border-color:#ff4d8d; box-shadow:0 0 0 3px rgba(255,77,141,0.1); }
+  body.theme-rose .filter-btn { background:#fff0f5; color:#7a3050; border-color:rgba(255,105,160,0.2); }
+  body.theme-rose .filter-btn:hover { background:#ffe4ee; color:#2a0a18; }
+  body.theme-rose .filter-btn.active { background:rgba(255,77,141,0.1); color:#ff4d8d; border-color:rgba(255,77,141,0.3); }
+  body.theme-rose .chart-title { color:#2a0a18; }
+  /* Today bar / XP bar */
+  body.theme-rose #todayBar { background:linear-gradient(90deg,#ff4d8d,#e0186a) !important; }
+  body.theme-rose #bigXPBar { background:linear-gradient(90deg,#ff4d8d,#e0186a) !important; }
+  body.theme-rose .stat-card.s1::before { background:linear-gradient(90deg,#ff4d8d,#e0186a); }
+  /* Streak */
+  body.theme-rose .streak-day { border-color:rgba(255,105,160,0.2); color:#c090a8; background:transparent; }
+  body.theme-rose .streak-day.has-tasks { background:rgba(255,77,141,0.08); border-color:rgba(255,77,141,0.3); color:#ff4d8d; }
+  body.theme-rose .streak-day.completed { background:rgba(14,168,116,0.1); border-color:rgba(14,168,116,0.35); color:#0ea874; }
+  body.theme-rose .streak-day.today { border-color:#ff4d8d !important; box-shadow:0 0 0 2px rgba(255,77,141,0.2); }
+  /* Toast */
+  body.theme-rose .toast { background:#ffffff; color:#2a0a18; border-color:rgba(255,105,160,0.25); box-shadow:0 4px 24px rgba(255,105,160,0.15); }
+  body.theme-rose .toast.success { border-color:rgba(14,168,116,0.3); }
+  body.theme-rose .toast.warning { border-color:rgba(255,105,160,0.35); }
+  /* Settings toggle */
+  body.theme-rose .toggle { background:#ffe4ee; border-color:rgba(255,105,160,0.25); }
+  body.theme-rose .toggle.on { background:#ff4d8d; border-color:#ff4d8d; }
+  /* Level current */
+  body.theme-rose .level-card.current { border-color:#ff4d8d; box-shadow:0 0 28px rgba(255,77,141,0.18); background:rgba(255,77,141,0.04); }
+  body.theme-rose .xp-level { background:rgba(255,77,141,0.1) !important; color:#ff4d8d !important; }
+  body.theme-rose .level-xp { color:#ff4d8d !important; }
+  body.theme-rose .status-current { background:rgba(255,77,141,0.1); color:#ff4d8d; }
+
+  body.theme-mint {
+    --bg: #edfaf4;
+    --bg2: #f2fcf7;
+    --bg3: #e0f5ec;
+    --surface: #ffffff;
+    --surface2: #edfaf4;
+    --border: rgba(16,160,100,0.15);
+    --border2: rgba(16,160,100,0.28);
+    --accent: #10b981;
+    --accent2: #059669;
+    --accent3: #3b82f6;
+    --accent4: #ef4444;
+    --accent5: #f59e0b;
+    --text: #0a1f17;
+    --text2: #2d6650;
+    --text3: #6aab8a;
+    --gold: #b45309;
+    --shadow: 0 4px 24px rgba(16,160,100,0.12);
+  }
+  body.theme-mint body::before { display:none; }
+  body.theme-mint .sidebar { background:linear-gradient(180deg,#f2fcf7,#e0f5ec); border-left:1px solid rgba(16,160,100,0.12); }
+  body.theme-mint .topbar { background:rgba(242,252,247,0.92); border-bottom:1px solid rgba(16,160,100,0.12); }
+  body.theme-mint .task-item, body.theme-mint .stat-card, body.theme-mint .chart-card,
+  body.theme-mint .settings-card, body.theme-mint .modal, body.theme-mint .notif-item,
+  body.theme-mint .level-card, body.theme-mint .ach-card { background:#fff; }
+  body.theme-mint .task-item:hover { background:#f2fcf7; }
+  body.theme-mint .field input, body.theme-mint .field select, body.theme-mint .field textarea { background:#e0f5ec; color:#0a1f17; }
+  body.theme-mint .nav-item:hover { background:#e0f5ec; color:#0a1f17; }
+  body.theme-mint .nav-item.active { background:rgba(16,185,129,0.1); color:#10b981; border-color:rgba(16,185,129,0.2); }
+  body.theme-mint .xp-widget { background:#e0f5ec; }
+  body.theme-mint .logo-icon, body.theme-mint .btn-primary { background:linear-gradient(135deg,#10b981,#059669) !important; box-shadow:0 4px 16px rgba(16,185,129,0.3) !important; }
+  body.theme-mint .btn-ghost { background:#e0f5ec; color:#2d6650; border-color:rgba(16,160,100,0.2); }
+  body.theme-mint .filter-btn { background:#e0f5ec; color:#2d6650; border-color:rgba(16,160,100,0.15); }
+  body.theme-mint .filter-btn.active { background:rgba(16,185,129,0.1); color:#10b981; }
+  body.theme-mint .xp-bar-fill { background:linear-gradient(90deg,#10b981,#059669) !important; }
+  body.theme-mint .xp-level { background:rgba(16,185,129,0.1) !important; color:#10b981 !important; }
+  body.theme-mint .topbar-title span { color:#10b981 !important; }
+  body.theme-mint #bigXPBar, body.theme-mint #todayBar { background:linear-gradient(90deg,#10b981,#059669) !important; }
+  body.theme-mint .streak-day { border-color:rgba(16,160,100,0.15); color:#6aab8a; }
+  body.theme-mint .streak-day.completed { background:rgba(16,185,129,0.15); border-color:rgba(16,185,129,0.3); color:#10b981; }
+  body.theme-mint .toast { background:#fff; color:#0a1f17; }
+
+  /* Light theme: active dot needs dark checkmark */
+  body.theme-white .theme-dot.active::after,
+  body.theme-rose .theme-dot.active::after,
+  body.theme-mint .theme-dot.active::after { color:#333; text-shadow:none; }
+  body.theme-white .theme-dot.active,
+  body.theme-rose .theme-dot.active,
+  body.theme-mint .theme-dot.active { border-color:#333; box-shadow:0 0 0 3px rgba(0,0,0,0.1); }
+
+  /* Theme Switcher Widget */
+  .theme-switcher {
+    display:flex; gap:8px; flex-wrap:wrap; padding:4px 0;
+  }
+  .theme-dot {
+    width:32px; height:32px; border-radius:50%; cursor:pointer;
+    border:2px solid transparent; transition:all 0.2s;
+    position:relative; display:flex; align-items:center; justify-content:center;
+  }
+  .theme-dot:hover { transform:scale(1.15); }
+  .theme-dot.active { border-color:white; box-shadow:0 0 0 3px rgba(255,255,255,0.15); }
+  .theme-dot.active::after {
+    content:'✓'; font-size:13px; font-weight:900; color:#fff;
+    text-shadow:0 1px 3px rgba(0,0,0,0.5);
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    font-family: 'Cairo', 'Tajawal', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── BACKGROUND MESH ── */
+  body::before {
+    content:'';
+    position:fixed; inset:0; z-index:0;
+    background:
+      radial-gradient(ellipse 80% 50% at 20% 20%, rgba(79,124,255,0.07) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 80% 80%, rgba(124,92,252,0.07) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 60% at 50% 50%, rgba(0,229,160,0.03) 0%, transparent 70%);
+    pointer-events:none;
+  }
+
+  /* ── LAYOUT ── */
+  .app { position:relative; z-index:1; display:flex; min-height:100vh; }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    width:270px; flex-shrink:0;
+    background:linear-gradient(180deg, var(--bg2) 0%, var(--bg3) 100%);
+    border-left:1px solid var(--border);
+    display:flex; flex-direction:column;
+    padding:0;
+    position:sticky; top:0; height:100vh;
+    overflow:hidden;
+  }
+
+  .logo {
+    padding:28px 24px 20px;
+    border-bottom:1px solid var(--border);
+    display:flex; align-items:center; gap:12px;
+  }
+  .logo-icon {
+    width:42px; height:42px;
+    background:linear-gradient(135deg, var(--accent), var(--accent2));
+    border-radius:12px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:20px;
+    box-shadow:0 4px 20px rgba(79,124,255,0.4);
+  }
+  .logo-text { font-size:18px; font-weight:800; color:var(--text); letter-spacing:-0.3px; }
+  .logo-sub { font-size:11px; color:var(--text3); font-weight:400; }
+
+  /* XP Bar in sidebar */
+  .xp-widget {
+    margin:16px 16px 0;
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--r);
+    padding:14px 16px;
+  }
+  .xp-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; }
+  .xp-level {
+    font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase;
+    color:var(--accent); background:rgba(79,124,255,0.12);
+    padding:3px 8px; border-radius:20px;
+  }
+  .xp-pts { font-size:12px; color:var(--text2); }
+  .xp-bar-wrap { height:6px; background:rgba(255,255,255,0.06); border-radius:10px; overflow:hidden; }
+  .xp-bar-fill {
+    height:100%; border-radius:10px;
+    background:linear-gradient(90deg, var(--accent), var(--accent2));
+    transition:width 0.8s cubic-bezier(.4,0,.2,1);
+    position:relative;
+  }
+  .xp-bar-fill::after {
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(90deg,transparent 60%,rgba(255,255,255,0.3));
+    animation:shimmer 2s infinite;
+  }
+  @keyframes shimmer { 0%{transform:translateX(-100%)} 100%{transform:translateX(100%)} }
+  .xp-next { font-size:10px; color:var(--text3); margin-top:5px; text-align:left; }
+
+  /* Nav */
+  .nav { flex:1; overflow-y:auto; padding:12px 12px; }
+  .nav::-webkit-scrollbar { width:3px; }
+  .nav::-webkit-scrollbar-thumb { background:var(--border2); border-radius:3px; }
+  .nav-section { margin-bottom:20px; }
+  .nav-label { font-size:10px; font-weight:700; letter-spacing:1.5px; color:var(--text3); text-transform:uppercase; padding:0 10px 6px; }
+  .nav-item {
+    display:flex; align-items:center; gap:12px;
+    padding:10px 12px; border-radius:10px; margin-bottom:2px;
+    cursor:pointer; transition:all 0.2s; color:var(--text2);
+    font-size:13.5px; font-weight:600; position:relative;
+    border:1px solid transparent;
+  }
+  .nav-item:hover { background:var(--surface); color:var(--text); }
+  .nav-item.active {
+    background:rgba(79,124,255,0.12);
+    color:var(--accent); border-color:rgba(79,124,255,0.2);
+  }
+  .nav-icon { font-size:16px; width:20px; text-align:center; }
+  .nav-badge {
+    margin-right:auto; font-size:10px; font-weight:700;
+    background:var(--accent4); color:#fff;
+    padding:2px 7px; border-radius:20px; line-height:1.4;
+  }
+  .nav-badge.green { background:var(--accent3); color:#000; }
+
+  /* Categories colors */
+  .cat-dot {
+    width:8px; height:8px; border-radius:50%; flex-shrink:0;
+  }
+
+  /* ── MAIN ── */
+  .main { flex:1; display:flex; flex-direction:column; min-width:0; }
+
+  /* Topbar */
+  .topbar {
+    background:rgba(10,12,16,0.85);
+    backdrop-filter:blur(20px);
+    border-bottom:1px solid var(--border);
+    padding:0 28px;
+    height:64px;
+    display:flex; align-items:center; gap:16px;
+    position:sticky; top:0; z-index:100;
+  }
+  .topbar-title { font-size:18px; font-weight:800; flex:1; }
+  .topbar-title span { color:var(--accent); }
+  .topbar-actions { display:flex; align-items:center; gap:10px; }
+  .btn {
+    display:inline-flex; align-items:center; gap:7px;
+    padding:9px 16px; border-radius:10px; border:none;
+    font-family:'Cairo',sans-serif; font-size:13px; font-weight:700;
+    cursor:pointer; transition:all 0.2s;
+  }
+  .btn-primary {
+    background:linear-gradient(135deg, var(--accent), var(--accent2));
+    color:#fff; box-shadow:0 4px 16px rgba(79,124,255,0.35);
+  }
+  .btn-primary:hover { transform:translateY(-1px); box-shadow:0 6px 24px rgba(79,124,255,0.45); }
+  .btn-ghost {
+    background:var(--surface); color:var(--text2);
+    border:1px solid var(--border);
+  }
+  .btn-ghost:hover { color:var(--text); border-color:var(--border2); }
+
+  /* ── CONTENT ── */
+  .content { flex:1; padding:24px 28px; overflow-y:auto; }
+  .content::-webkit-scrollbar { width:4px; }
+  .content::-webkit-scrollbar-thumb { background:var(--border); border-radius:4px; }
+
+  /* ── PAGES ── */
+  .page { display:none; }
+  .page.active { display:block; }
+
+  /* ── STATS ROW ── */
+  .stats-row { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:24px; }
+  .stat-card {
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--r2);
+    padding:18px 20px;
+    position:relative; overflow:hidden;
+    transition:all 0.3s;
+  }
+  .stat-card:hover { border-color:var(--border2); transform:translateY(-2px); box-shadow:var(--shadow); }
+  .stat-card::before {
+    content:''; position:absolute; top:0; left:0; right:0; height:3px;
+    border-radius:var(--r2) var(--r2) 0 0;
+  }
+  .stat-card.s1::before { background:linear-gradient(90deg,var(--accent),var(--accent2)); }
+  .stat-card.s2::before { background:linear-gradient(90deg,var(--accent3),#00b8ff); }
+  .stat-card.s3::before { background:linear-gradient(90deg,var(--accent5),#ff9500); }
+  .stat-card.s4::before { background:linear-gradient(90deg,var(--accent4),#ff47a0); }
+  .stat-icon { font-size:26px; margin-bottom:10px; }
+  .stat-val { font-size:32px; font-weight:900; line-height:1; margin-bottom:4px; }
+  .stat-label { font-size:12px; color:var(--text2); font-weight:500; }
+  .stat-change { font-size:11px; color:var(--accent3); margin-top:4px; }
+
+  /* ── QUICK ADD ── */
+  .quick-add {
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--r2);
+    padding:20px;
+    margin-bottom:24px;
+    display:flex; gap:12px; align-items:flex-end;
+    flex-wrap:wrap;
+  }
+  .quick-add-title { width:100%; font-size:13px; font-weight:700; color:var(--text2); margin-bottom:4px; }
+  .field { flex:1; min-width:180px; display:flex; flex-direction:column; gap:6px; }
+  .field label { font-size:11px; font-weight:700; color:var(--text3); letter-spacing:0.5px; }
+  .field input, .field select, .field textarea {
+    background:var(--bg3);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:10px 14px;
+    font-family:'Cairo',sans-serif;
+    font-size:13px; font-weight:500;
+    color:var(--text);
+    outline:none;
+    transition:border 0.2s;
+    direction:rtl;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus {
+    border-color:var(--accent);
+    box-shadow:0 0 0 3px rgba(79,124,255,0.1);
+  }
+  .field select option { background:var(--bg3); }
+
+  /* ── TASK LIST ── */
+  .section-header {
+    display:flex; justify-content:space-between; align-items:center;
+    margin-bottom:14px;
+  }
+  .section-title { font-size:15px; font-weight:800; }
+  .section-count {
+    font-size:11px; color:var(--text3); background:var(--surface);
+    padding:3px 10px; border-radius:20px; border:1px solid var(--border);
+  }
+
+  .task-list { display:flex; flex-direction:column; gap:8px; margin-bottom:28px; }
+  .task-item {
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--r);
+    padding:14px 16px;
+    display:flex; align-items:center; gap:14px;
+    cursor:pointer; transition:all 0.25s;
+    position:relative; overflow:hidden;
+    animation:slideIn 0.3s ease;
+  }
+  @keyframes slideIn {
+    from { opacity:0; transform:translateY(-10px); }
+    to { opacity:1; transform:translateY(0); }
+  }
+  .task-item::before {
+    content:''; position:absolute; right:0; top:0; bottom:0; width:3px;
+    border-radius:0 var(--r) var(--r) 0;
+  }
+  .task-item.pri-high::before { background:var(--accent4); }
+  .task-item.pri-med::before { background:var(--accent5); }
+  .task-item.pri-low::before { background:var(--accent3); }
+  .task-item:hover { border-color:var(--border2); background:var(--surface2); transform:translateX(-2px); }
+  .task-item.done { opacity:0.5; }
+  .task-item.done .task-title { text-decoration:line-through; color:var(--text3); }
+  .task-item.overdue { border-color:rgba(255,107,107,0.3); background:rgba(255,107,107,0.04); }
+
+  .task-check {
+    width:22px; height:22px; flex-shrink:0;
+    border:2px solid var(--border2);
+    border-radius:7px; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    transition:all 0.2s; background:transparent;
+    font-size:12px;
+  }
+  .task-check:hover { border-color:var(--accent); }
+  .task-item.done .task-check {
+    background:var(--accent3); border-color:var(--accent3);
+    color:#000;
+  }
+
+  .task-body { flex:1; min-width:0; }
+  .task-title { font-size:14px; font-weight:600; margin-bottom:4px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .task-meta { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+  .task-tag {
+    font-size:10px; font-weight:700; padding:2px 8px; border-radius:20px;
+    letter-spacing:0.3px;
+  }
+  .tag-work { background:rgba(79,124,255,0.15); color:var(--accent); }
+  .tag-personal { background:rgba(0,229,160,0.15); color:var(--accent3); }
+  .tag-health { background:rgba(255,184,77,0.15); color:var(--accent5); }
+  .tag-study { background:rgba(124,92,252,0.15); color:var(--accent2); }
+  .tag-other { background:rgba(255,107,107,0.15); color:var(--accent4); }
+  .task-time { font-size:11px; color:var(--text3); display:flex; align-items:center; gap:4px; }
+  .task-time.overdue { color:var(--accent4); }
+  .task-pts { font-size:10px; font-weight:700; color:var(--gold); background:rgba(255,215,0,0.1); padding:2px 7px; border-radius:20px; }
+
+  .task-actions { display:flex; gap:6px; opacity:0; transition:opacity 0.2s; }
+  .task-item:hover .task-actions { opacity:1; }
+  .task-btn {
+    width:28px; height:28px; border-radius:8px; border:none;
+    background:var(--bg3); color:var(--text3);
+    cursor:pointer; font-size:13px; transition:all 0.2s;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .task-btn:hover { background:var(--surface2); color:var(--text); }
+  .task-btn.delete:hover { background:rgba(255,107,107,0.15); color:var(--accent4); }
+  .task-btn.notify:hover { background:rgba(255,184,77,0.15); color:var(--accent5); }
+
+  /* Priority badge */
+  .pri-badge {
+    font-size:10px; font-weight:700; padding:2px 7px; border-radius:20px; letter-spacing:0.3px;
+  }
+  .pri-high { background:rgba(255,107,107,0.15); color:var(--accent4); }
+  .pri-med { background:rgba(255,184,77,0.15); color:var(--accent5); }
+  .pri-low { background:rgba(0,229,160,0.15); color:var(--accent3); }
+
+  /* ── CHARTS PAGE ── */
+  .chart-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; margin-bottom:24px; }
+  .chart-card {
+    background:var(--surface); border:1px solid var(--border);
+    border-radius:var(--r2); padding:20px;
+  }
+  .chart-card.full { grid-column:1/-1; }
+  .chart-title { font-size:14px; font-weight:700; margin-bottom:16px; color:var(--text); }
+
+  /* Donut chart */
+  .donut-wrap { display:flex; align-items:center; gap:24px; }
+  .donut-svg { flex-shrink:0; }
+  .donut-legend { flex:1; display:flex; flex-direction:column; gap:10px; }
+  .legend-item { display:flex; align-items:center; gap:10px; font-size:12px; }
+  .legend-dot { width:10px; height:10px; border-radius:50%; flex-shrink:0; }
+  .legend-name { flex:1; color:var(--text2); }
+  .legend-val { font-weight:700; font-size:13px; }
+
+  /* Bar chart */
+  .bar-chart { display:flex; align-items:flex-end; gap:8px; height:140px; }
+  .bar-col { flex:1; display:flex; flex-direction:column; align-items:center; gap:4px; }
+  .bar-fill {
+    width:100%; border-radius:6px 6px 0 0;
+    background:linear-gradient(180deg,var(--accent),var(--accent2));
+    min-height:4px; transition:height 0.8s cubic-bezier(.4,0,.2,1);
+    position:relative;
+  }
+  .bar-fill.done-bar { background:linear-gradient(180deg,var(--accent3),#00b8ff); }
+  .bar-label { font-size:10px; color:var(--text3); font-weight:600; }
+  .bar-val { font-size:11px; font-weight:700; color:var(--text2); }
+
+  /* Streak */
+  .streak-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:5px; }
+  .streak-day {
+    aspect-ratio:1; border-radius:6px; border:1px solid var(--border);
+    display:flex; align-items:center; justify-content:center;
+    font-size:9px; color:var(--text3); font-weight:600;
+    transition:all 0.2s;
+  }
+  .streak-day.has-tasks { background:rgba(79,124,255,0.15); border-color:rgba(79,124,255,0.3); color:var(--accent); }
+  .streak-day.completed { background:rgba(0,229,160,0.2); border-color:rgba(0,229,160,0.4); color:var(--accent3); }
+  .streak-day.today { border-color:var(--accent); box-shadow:0 0 0 2px rgba(79,124,255,0.2); }
+
+  /* ── LEVELS PAGE ── */
+  .levels-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .level-card {
+    background:var(--surface); border:1px solid var(--border);
+    border-radius:var(--r2); padding:20px; text-align:center;
+    transition:all 0.3s; position:relative; overflow:hidden;
+  }
+  .level-card.unlocked { border-color:rgba(79,124,255,0.3); }
+  .level-card.current {
+    border-color:var(--accent);
+    box-shadow:0 0 30px rgba(79,124,255,0.2);
+    background:rgba(79,124,255,0.07);
+  }
+  .level-card.locked { opacity:0.5; filter:grayscale(0.5); }
+  .level-badge { font-size:36px; margin-bottom:10px; }
+  .level-name { font-size:14px; font-weight:800; margin-bottom:4px; }
+  .level-req { font-size:11px; color:var(--text3); margin-bottom:8px; }
+  .level-xp { font-size:18px; font-weight:900; color:var(--accent); }
+  .level-status {
+    font-size:10px; font-weight:700; letter-spacing:1px; text-transform:uppercase;
+    margin-top:8px; padding:3px 10px; border-radius:20px;
+    display:inline-block;
+  }
+  .status-current { background:rgba(79,124,255,0.15); color:var(--accent); }
+  .status-done { background:rgba(0,229,160,0.15); color:var(--accent3); }
+  .status-locked { background:rgba(255,255,255,0.06); color:var(--text3); }
+
+  /* Achievements */
+  .achievements-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:24px; }
+  .ach-card {
+    background:var(--surface); border:1px solid var(--border);
+    border-radius:var(--r); padding:16px; text-align:center;
+    transition:all 0.2s;
+  }
+  .ach-card.unlocked { border-color:rgba(255,215,0,0.3); background:rgba(255,215,0,0.04); }
+  .ach-card.locked { opacity:0.4; filter:grayscale(1); }
+  .ach-icon { font-size:28px; margin-bottom:8px; }
+  .ach-name { font-size:12px; font-weight:700; margin-bottom:3px; }
+  .ach-desc { font-size:10px; color:var(--text3); }
+
+  /* ── NOTIFICATIONS ── */
+  .notif-list { display:flex; flex-direction:column; gap:10px; }
+  .notif-item {
+    background:var(--surface); border:1px solid var(--border);
+    border-radius:var(--r); padding:14px 16px;
+    display:flex; align-items:center; gap:14px;
+    animation:slideIn 0.3s ease;
+  }
+  .notif-item.unread { border-color:rgba(79,124,255,0.25); background:rgba(79,124,255,0.05); }
+  .notif-icon { font-size:22px; flex-shrink:0; }
+  .notif-body { flex:1; }
+  .notif-title { font-size:13px; font-weight:700; margin-bottom:3px; }
+  .notif-time { font-size:11px; color:var(--text3); }
+  .notif-dot { width:8px; height:8px; border-radius:50%; background:var(--accent); flex-shrink:0; }
+
+  /* ── MODAL ── */
+  .modal-overlay {
+    position:fixed; inset:0; z-index:1000;
+    background:rgba(0,0,0,0.7); backdrop-filter:blur(8px);
+    display:none; align-items:center; justify-content:center;
+    animation:fadeIn 0.2s ease;
+  }
+  @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+  .modal-overlay.active { display:flex; }
+  .modal {
+    background:var(--bg2); border:1px solid var(--border2);
+    border-radius:var(--r2); padding:28px; width:90%; max-width:500px;
+    box-shadow:var(--shadow);
+    animation:scaleIn 0.25s cubic-bezier(.4,0,.2,1);
+  }
+  @keyframes scaleIn { from{opacity:0;transform:scale(0.95)} to{opacity:1;transform:scale(1)} }
+  .modal-title { font-size:18px; font-weight:800; margin-bottom:20px; display:flex; align-items:center; gap:10px; }
+  .modal-actions { display:flex; gap:10px; margin-top:20px; justify-content:flex-end; }
+
+  /* ── TOAST ── */
+  .toast-container {
+    position:fixed; bottom:24px; right:24px; z-index:2000;
+    display:flex; flex-direction:column; gap:8px;
+  }
+  .toast {
+    background:var(--surface2); border:1px solid var(--border2);
+    border-radius:12px; padding:12px 18px;
+    font-size:13px; font-weight:600;
+    display:flex; align-items:center; gap:10px;
+    box-shadow:var(--shadow);
+    animation:toastIn 0.35s cubic-bezier(.4,0,.2,1);
+    max-width:320px;
+  }
+  @keyframes toastIn { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+  .toast.success { border-color:rgba(0,229,160,0.3); }
+  .toast.warning { border-color:rgba(255,184,77,0.3); }
+  .toast.xp { border-color:rgba(255,215,0,0.3); }
+
+  /* ── EMPTY STATE ── */
+  .empty { text-align:center; padding:60px 20px; color:var(--text3); }
+  .empty-icon { font-size:48px; margin-bottom:16px; }
+  .empty-title { font-size:16px; font-weight:700; color:var(--text2); margin-bottom:6px; }
+  .empty-sub { font-size:13px; }
+
+  /* ── FILTERS ── */
+  .filters { display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap; }
+  .filter-btn {
+    padding:6px 14px; border-radius:8px; border:1px solid var(--border);
+    background:var(--surface); color:var(--text3);
+    font-family:'Cairo',sans-serif; font-size:12px; font-weight:600;
+    cursor:pointer; transition:all 0.2s;
+  }
+  .filter-btn:hover { color:var(--text); border-color:var(--border2); }
+  .filter-btn.active { background:rgba(79,124,255,0.12); color:var(--accent); border-color:rgba(79,124,255,0.3); }
+
+  /* XP POP */
+  .xp-pop {
+    position:fixed; z-index:3000;
+    font-family:'Cairo',sans-serif; font-size:15px; font-weight:800;
+    color:var(--gold); pointer-events:none;
+    animation:xpPop 1.5s ease forwards;
+    text-shadow:0 0 20px rgba(255,215,0,0.5);
+  }
+  @keyframes xpPop {
+    0% { opacity:1; transform:translateY(0) scale(1); }
+    50% { opacity:1; transform:translateY(-40px) scale(1.2); }
+    100% { opacity:0; transform:translateY(-80px) scale(0.9); }
+  }
+
+  /* Responsive */
+  @media (max-width:900px) {
+    .sidebar { width:220px; }
+    .stats-row { grid-template-columns:repeat(2,1fr); }
+    .chart-grid { grid-template-columns:1fr; }
+    .levels-grid { grid-template-columns:repeat(2,1fr); }
+    .achievements-grid { grid-template-columns:repeat(2,1fr); }
+  }
+  @media (max-width:650px) {
+    .sidebar { display:none; }
+    .stats-row { grid-template-columns:repeat(2,1fr); }
+    .levels-grid { grid-template-columns:1fr; }
+    .content { padding:16px; }
+  }
+
+  /* Settings */
+  .settings-card {
+    background:var(--surface); border:1px solid var(--border);
+    border-radius:var(--r2); padding:20px; margin-bottom:14px;
+  }
+  .settings-row {
+    display:flex; align-items:center; justify-content:space-between;
+    padding:12px 0; border-bottom:1px solid var(--border);
+  }
+  .settings-row:last-child { border-bottom:none; }
+  .settings-label { font-size:13px; font-weight:600; }
+  .settings-sub { font-size:11px; color:var(--text3); margin-top:2px; }
+  .toggle {
+    width:44px; height:24px; background:var(--bg3);
+    border-radius:24px; border:1px solid var(--border);
+    cursor:pointer; position:relative; transition:all 0.3s;
+  }
+  .toggle.on { background:var(--accent); border-color:var(--accent); }
+  .toggle::after {
+    content:''; position:absolute; width:18px; height:18px;
+    background:#fff; border-radius:50%;
+    top:2px; right:2px; transition:all 0.3s;
+  }
+  .toggle.on::after { right:calc(100% - 20px); }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="logo">
+      <div class="logo-icon">✦</div>
+      <div>
+        <div class="logo-text">TaskFlow</div>
+        <div class="logo-sub">مدير مهامك الذكي</div>
+      </div>
+    </div>
+
+    <div class="xp-widget">
+      <div class="xp-header">
+        <span class="xp-level" id="sidebarLevel">مبتدئ</span>
+        <span class="xp-pts"><span id="sidebarXP">0</span> نقطة</span>
+      </div>
+      <div class="xp-bar-wrap">
+        <div class="xp-bar-fill" id="sidebarXPBar" style="width:0%"></div>
+      </div>
+      <div class="xp-next" id="xpNext">0 / 100 للمستوى التالي</div>
+    </div>
+
+    <nav class="nav">
+      <div class="nav-section">
+        <div class="nav-label">الرئيسية</div>
+        <div class="nav-item active" onclick="showPage('dashboard')">
+          <span class="nav-icon">🏠</span> لوحة التحكم
+        </div>
+        <div class="nav-item" onclick="showPage('notifications')">
+          <span class="nav-icon">🔔</span> التنبيهات
+          <span class="nav-badge" id="notifBadge">0</span>
+        </div>
+      </div>
+      <div class="nav-section">
+        <div class="nav-label">المهام</div>
+        <div class="nav-item" onclick="showPage('tasks'); setFilter('all')">
+          <span class="nav-icon">📋</span> كل المهام
+          <span class="nav-badge green" id="totalBadge">0</span>
+        </div>
+        <div class="nav-item" onclick="showPage('tasks'); setFilter('today')">
+          <span class="nav-icon">📅</span> مهام اليوم
+        </div>
+        <div class="nav-item" onclick="showPage('tasks'); setFilter('overdue')">
+          <span class="nav-icon">⚠️</span> متأخرة
+          <span class="nav-badge" id="overdueBadge">0</span>
+        </div>
+        <div class="nav-item" onclick="showPage('tasks'); setFilter('done')">
+          <span class="nav-icon">✅</span> مكتملة
+        </div>
+      </div>
+      <div class="nav-section">
+        <div class="nav-label">التحليل والتقدم</div>
+        <div class="nav-item" onclick="showPage('charts')">
+          <span class="nav-icon">📊</span> الإحصائيات
+        </div>
+        <div class="nav-item" onclick="showPage('levels')">
+          <span class="nav-icon">🏆</span> المستويات
+        </div>
+        <div class="nav-item" onclick="showPage('settings')">
+          <span class="nav-icon">⚙️</span> الإعدادات
+        </div>
+      </div>
+    </nav>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+    <div class="topbar">
+      <div class="topbar-title" id="pageTitle">لوحة <span>التحكم</span></div>
+      <div class="topbar-actions">
+        <button class="btn btn-ghost" onclick="checkOverdue()">🔔 فحص التنبيهات</button>
+        <button class="btn btn-primary" onclick="openAddModal()">＋ مهمة جديدة</button>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <!-- ══ DASHBOARD PAGE ══ -->
+      <div id="page-dashboard" class="page active">
+        <div class="stats-row">
+          <div class="stat-card s1">
+            <div class="stat-icon">📋</div>
+            <div class="stat-val" id="stat-total">0</div>
+            <div class="stat-label">إجمالي المهام</div>
+            <div class="stat-change" id="stat-total-sub"></div>
+          </div>
+          <div class="stat-card s2">
+            <div class="stat-icon">✅</div>
+            <div class="stat-val" id="stat-done">0</div>
+            <div class="stat-label">مهام مكتملة</div>
+            <div class="stat-change" id="stat-rate">معدل الإنجاز: 0%</div>
+          </div>
+          <div class="stat-card s3">
+            <div class="stat-icon">⏳</div>
+            <div class="stat-val" id="stat-pending">0</div>
+            <div class="stat-label">قيد التنفيذ</div>
+          </div>
+          <div class="stat-card s4">
+            <div class="stat-icon">⚡</div>
+            <div class="stat-val" id="stat-overdue">0</div>
+            <div class="stat-label">متأخرة</div>
+          </div>
+        </div>
+
+        <!-- Today's progress -->
+        <div class="chart-card" style="margin-bottom:20px;">
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px;">
+            <div class="chart-title" style="margin-bottom:0">تقدم اليوم — <span id="todayDate" style="color:var(--accent)"></span></div>
+            <div style="font-size:13px; font-weight:700; color:var(--accent3)"><span id="todayDone">0</span>/<span id="todayTotal">0</span> مهمة</div>
+          </div>
+          <div style="height:10px; background:rgba(255,255,255,0.06); border-radius:10px; overflow:hidden;">
+            <div id="todayBar" style="height:100%; width:0%; background:linear-gradient(90deg,var(--accent3),#00b8ff); border-radius:10px; transition:width 0.8s;"></div>
+          </div>
+          <div style="display:flex; justify-content:space-between; margin-top:8px; font-size:11px; color:var(--text3);">
+            <span>0%</span>
+            <span id="todayPct" style="color:var(--accent3); font-weight:700;">0%</span>
+            <span>100%</span>
+          </div>
+        </div>
+
+        <!-- Today's tasks -->
+        <div class="section-header">
+          <div class="section-title">📅 مهام اليوم</div>
+          <div class="section-count" id="todayCount">0 مهام</div>
+        </div>
+        <div class="task-list" id="todayTasks"></div>
+
+        <!-- Overdue tasks -->
+        <div class="section-header" style="margin-top:8px;">
+          <div class="section-title" style="color:var(--accent4)">⚠️ مهام متأخرة</div>
+          <div class="section-count" id="overdueCount">0 مهام</div>
+        </div>
+        <div class="task-list" id="overdueTasks"></div>
+      </div>
+
+      <!-- ══ ALL TASKS PAGE ══ -->
+      <div id="page-tasks" class="page">
+        <div class="filters" id="filters">
+          <button class="filter-btn active" onclick="setFilter('all')">الكل</button>
+          <button class="filter-btn" onclick="setFilter('today')">اليوم</button>
+          <button class="filter-btn" onclick="setFilter('overdue')">متأخرة</button>
+          <button class="filter-btn" onclick="setFilter('done')">مكتملة</button>
+          <button class="filter-btn" onclick="setFilter('work')">💼 عمل</button>
+          <button class="filter-btn" onclick="setFilter('personal')">👤 شخصي</button>
+          <button class="filter-btn" onclick="setFilter('health')">🏃 صحة</button>
+          <button class="filter-btn" onclick="setFilter('study')">📚 دراسة</button>
+        </div>
+        <div class="task-list" id="allTasksList"></div>
+      </div>
+
+      <!-- ══ CHARTS PAGE ══ -->
+      <div id="page-charts" class="page">
+        <div class="chart-grid">
+
+          <!-- Line chart XP -->
+          <div class="chart-card full">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+              <div class="chart-title" style="margin-bottom:0">📈 تطور نقاط XP — آخر 14 يوم</div>
+              <div style="font-size:12px;color:var(--text3);">المجموع: <span id="lineXPTotal" style="color:var(--accent);font-weight:800">0</span> XP</div>
+            </div>
+            <canvas id="lineChart" height="180" style="width:100%;display:block;"></canvas>
+          </div>
+
+          <!-- Grouped bar: week added vs done -->
+          <div class="chart-card full">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+              <div class="chart-title" style="margin-bottom:0">📊 مقارنة أسبوعية — مضافة مقابل منجزة</div>
+              <div style="display:flex;gap:14px;font-size:11px;font-weight:700;">
+                <span style="color:var(--accent)">■ مضافة</span>
+                <span style="color:var(--accent3)">■ منجزة</span>
+              </div>
+            </div>
+            <canvas id="barChart" height="180" style="width:100%;display:block;"></canvas>
+          </div>
+
+          <div class="chart-card">
+            <div class="chart-title">🍩 توزيع المهام حسب الفئة</div>
+            <div class="donut-wrap">
+              <canvas id="donutCat" width="160" height="160" style="flex-shrink:0;"></canvas>
+              <div class="donut-legend" id="donutLegend"></div>
+            </div>
+          </div>
+
+          <div class="chart-card">
+            <div class="chart-title">🎯 حالة المهام</div>
+            <div class="donut-wrap">
+              <canvas id="donutStatus" width="160" height="160" style="flex-shrink:0;"></canvas>
+              <div class="donut-legend" id="statusLegend"></div>
+            </div>
+          </div>
+
+          <div class="chart-card">
+            <div class="chart-title">⚡ توزيع الأولويات</div>
+            <canvas id="hbarChart" height="140" style="width:100%;display:block;"></canvas>
+          </div>
+
+          <div class="chart-card">
+            <div class="chart-title">🔥 سجل النشاط — آخر 28 يوم</div>
+            <div class="streak-grid" id="streakGrid"></div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ══ LEVELS PAGE ══ -->
+      <div id="page-levels" class="page">
+        <div style="background:var(--surface); border:1px solid var(--border); border-radius:var(--r2); padding:24px; margin-bottom:24px;">
+          <div style="display:flex; align-items:center; gap:20px;">
+            <div style="font-size:60px" id="currentBadge">🌱</div>
+            <div style="flex:1">
+              <div style="font-size:22px; font-weight:900; margin-bottom:4px;" id="currentLevelName">مبتدئ</div>
+              <div style="font-size:13px; color:var(--text3); margin-bottom:12px;" id="currentLevelDesc">ابدأ رحلتك مع TaskFlow</div>
+              <div style="display:flex; align-items:center; gap:14px; margin-bottom:8px;">
+                <span style="font-size:14px; font-weight:700; color:var(--accent)" id="bigXP">0</span>
+                <span style="font-size:12px; color:var(--text3)">نقطة XP مكتسبة</span>
+              </div>
+              <div style="height:8px; background:rgba(255,255,255,0.06); border-radius:10px; overflow:hidden; max-width:400px;">
+                <div id="bigXPBar" style="height:100%; width:0%; background:linear-gradient(90deg,var(--accent),var(--accent2)); border-radius:10px; transition:width 0.8s;"></div>
+              </div>
+              <div style="font-size:11px; color:var(--text3); margin-top:6px;" id="bigXPNext"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-header"><div class="section-title">🏅 المستويات</div></div>
+        <div class="levels-grid" id="levelsGrid"></div>
+
+        <div class="section-header" style="margin-top:28px;"><div class="section-title">🎖️ الإنجازات</div></div>
+        <div class="achievements-grid" id="achievementsGrid"></div>
+      </div>
+
+      <!-- ══ NOTIFICATIONS PAGE ══ -->
+      <div id="page-notifications" class="page">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+          <div></div>
+          <button class="btn btn-ghost" onclick="clearNotifications()">مسح الكل</button>
+        </div>
+        <div class="notif-list" id="notifList"></div>
+      </div>
+
+      <!-- ══ SETTINGS PAGE ══ -->
+      <div id="page-settings" class="page">
+        <div class="settings-card">
+          <div style="font-size:14px; font-weight:800; margin-bottom:16px; color:var(--text2);">🔔 التنبيهات</div>
+          <div class="settings-row">
+            <div><div class="settings-label">تنبيه للمهام المتأخرة</div><div class="settings-sub">تلقي تنبيه عند تأخر مهمة</div></div>
+            <div class="toggle on" id="tog1" onclick="toggleSetting('overdueAlerts')"></div>
+          </div>
+          <div class="settings-row">
+            <div><div class="settings-label">تنبيه يومي للمراجعة</div><div class="settings-sub">ملخص يومي في الصباح</div></div>
+            <div class="toggle on" id="tog2" onclick="toggleSetting('dailySummary')"></div>
+          </div>
+          <div class="settings-row">
+            <div><div class="settings-label">🔔 تفعيل الرنات الصوتية</div><div class="settings-sub">رنة عند الإنجاز، التأخر، وترقية المستوى</div></div>
+            <div class="toggle on" id="tog3" onclick="toggleSetting('sound')"></div>
+          </div>
+        </div>
+        <div class="settings-card">
+          <div style="font-size:14px; font-weight:800; margin-bottom:16px; color:var(--text2);">🎮 نظام النقاط</div>
+          <div class="settings-row">
+            <div><div class="settings-label">نقاط المهمة العادية</div></div>
+            <div style="font-size:16px; font-weight:900; color:var(--gold);">+10 XP</div>
+          </div>
+          <div class="settings-row">
+            <div><div class="settings-label">نقاط المهمة العاجلة</div></div>
+            <div style="font-size:16px; font-weight:900; color:var(--accent4);">+25 XP</div>
+          </div>
+          <div class="settings-row">
+            <div><div class="settings-label">مكافأة إنجاز كل مهام اليوم</div></div>
+            <div style="font-size:16px; font-weight:900; color:var(--accent3);">+50 XP</div>
+          </div>
+        </div>
+        <div class="settings-card">
+          <div style="font-size:14px; font-weight:800; margin-bottom:16px; color:var(--text2);">🎨 لون التطبيق</div>
+          <div class="settings-row" style="flex-direction:column; align-items:flex-start; gap:14px;">
+            <div style="font-size:12px; color:var(--text3);">اختر اللون الذي يعجبك — يتغير كل التطبيق فوراً</div>
+            <div class="theme-switcher" id="themeSwitcher">
+              <div class="theme-dot active" data-theme="" style="background:linear-gradient(135deg,#4f7cff,#7c5cfc)" title="أزرق (افتراضي)"></div>
+              <div class="theme-dot" data-theme="pink" style="background:linear-gradient(135deg,#ff5fa0,#d946a8)" title="وردي 🌸"></div>
+              <div class="theme-dot" data-theme="purple" style="background:linear-gradient(135deg,#c084fc,#a855f7)" title="بنفسجي"></div>
+              <div class="theme-dot" data-theme="cyan" style="background:linear-gradient(135deg,#00d4ff,#0099e6)" title="سماوي"></div>
+              <div class="theme-dot" data-theme="green" style="background:linear-gradient(135deg,#00e5a0,#00c97a)" title="أخضر"></div>
+              <div class="theme-dot" data-theme="orange" style="background:linear-gradient(135deg,#ff8c42,#ff5500)" title="برتقالي"></div>
+              <div class="theme-dot" data-theme="gold" style="background:linear-gradient(135deg,#ffd700,#ff9500)" title="ذهبي"></div>
+              <div class="theme-dot" data-theme="white" style="background:linear-gradient(135deg,#e8ecf8,#c8d0e8);border:2px solid #c0c8dc" title="أبيض"></div>
+              <div class="theme-dot" data-theme="rose" style="background:linear-gradient(135deg,#ff4d8d,#ffffff);border:2px solid #ffb3d0" title="وردي + أبيض 🌸"></div>
+              <div class="theme-dot" data-theme="mint" style="background:linear-gradient(135deg,#c6f2e0,#a0e8cc);border:2px solid #90d8b8" title="نعناعي 🌿"></div>
+            </div>
+            <div id="themeLabel" style="font-size:12px; font-weight:700; color:var(--accent);">🔵 أزرق (افتراضي)</div>
+          </div>
+        </div>
+        <div class="settings-card">
+          <div style="font-size:14px; font-weight:800; margin-bottom:16px; color:var(--text2);">🗑️ إدارة البيانات</div>
+          <div class="settings-row">
+            <div><div class="settings-label">حذف المهام المكتملة</div><div class="settings-sub">حذف جميع المهام المكتملة</div></div>
+            <button class="btn btn-ghost" onclick="clearCompleted()" style="font-size:12px; padding:7px 14px;">حذف</button>
+          </div>
+          <div class="settings-row">
+            <div><div class="settings-label">إعادة تعيين كل البيانات</div><div class="settings-sub">حذف كل المهام والنقاط</div></div>
+            <button class="btn" onclick="resetAll()" style="background:rgba(255,107,107,0.15); color:var(--accent4); font-size:12px; padding:7px 14px;">إعادة تعيين</button>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /content -->
+  </div><!-- /main -->
+</div><!-- /app -->
+
+<!-- ── ADD TASK MODAL ── -->
+<div class="modal-overlay" id="addModal">
+  <div class="modal">
+    <div class="modal-title">✦ <span>إضافة مهمة جديدة</span></div>
+    <div style="display:flex; flex-direction:column; gap:12px;">
+      <div class="field">
+        <label>عنوان المهمة *</label>
+        <input type="text" id="newTitle" placeholder="ما الذي تريد إنجازه؟" maxlength="80">
+      </div>
+      <div class="field">
+        <label>الوصف (اختياري)</label>
+        <textarea id="newDesc" rows="2" placeholder="تفاصيل إضافية..."></textarea>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+        <div class="field">
+          <label>الفئة</label>
+          <select id="newCat">
+            <option value="work">💼 عمل</option>
+            <option value="personal">👤 شخصي</option>
+            <option value="health">🏃 صحة</option>
+            <option value="study">📚 دراسة</option>
+            <option value="other">📌 أخرى</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>الأولوية</label>
+          <select id="newPri">
+            <option value="med">متوسطة</option>
+            <option value="high">🔴 عاجلة</option>
+            <option value="low">🟢 منخفضة</option>
+          </select>
+        </div>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+        <div class="field">
+          <label>تاريخ الاستحقاق</label>
+          <input type="date" id="newDate">
+        </div>
+        <div class="field">
+          <label>الوقت</label>
+          <input type="time" id="newTime">
+        </div>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal()">إلغاء</button>
+      <button class="btn btn-primary" onclick="addTask()">إضافة المهمة ✦</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── TOAST CONTAINER ── -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script>
+// ══════════════════════════════════════════
+//  STATE
+// ══════════════════════════════════════════
+let state = JSON.parse(localStorage.getItem('tf_state') || 'null') || {
+  tasks: [],
+  xp: 0,
+  notifications: [],
+  settings: { overdueAlerts: true, dailySummary: true, sound: true },
+  activity: {}
+};
+let currentFilter = 'all';
+
+const LEVELS = [
+  { name:'مبتدئ', badge:'🌱', xpRequired:0, desc:'ابدأ رحلتك مع TaskFlow' },
+  { name:'متعلم', badge:'📖', xpRequired:100, desc:'تعلم أساسيات الإنتاجية' },
+  { name:'نشيط', badge:'⚡', xpRequired:250, desc:'تطوير عادات يومية إيجابية' },
+  { name:'منظم', badge:'📐', xpRequired:500, desc:'أصبحت محترف التنظيم' },
+  { name:'محترف', badge:'🎯', xpRequired:1000, desc:'مستوى متقدم في الإنتاجية' },
+  { name:'خبير', badge:'🏅', xpRequired:2000, desc:'خبير معترف به بالإنتاجية' },
+  { name:'أسطورة', badge:'🌟', xpRequired:4000, desc:'مستوى أسطوري نادر' },
+  { name:'بطل', badge:'👑', xpRequired:7000, desc:'وصلت إلى قمة الإنتاجية' },
+  { name:'إله المهام', badge:'⚜️', xpRequired:12000, desc:'أعلى مستوى في TaskFlow' }
+];
+
+const ACHIEVEMENTS = [
+  { id:'first', name:'الأولى', desc:'أكمل أول مهمة', icon:'🎉', check: s => s.tasks.filter(t=>t.done).length >= 1 },
+  { id:'ten', name:'عشرة بعشرة', desc:'أكمل 10 مهام', icon:'🔟', check: s => s.tasks.filter(t=>t.done).length >= 10 },
+  { id:'fifty', name:'المتمرس', desc:'أكمل 50 مهمة', icon:'💪', check: s => s.tasks.filter(t=>t.done).length >= 50 },
+  { id:'hundred', name:'المئوية', desc:'أكمل 100 مهمة', icon:'💯', check: s => s.tasks.filter(t=>t.done).length >= 100 },
+  { id:'streak3', name:'3 أيام متتالية', desc:'نشط 3 أيام', icon:'🔥', check: s => getStreakDays(s) >= 3 },
+  { id:'streak7', name:'أسبوع كامل', desc:'نشط 7 أيام', icon:'🌈', check: s => getStreakDays(s) >= 7 },
+  { id:'xp500', name:'محترف XP', desc:'اكسب 500 XP', icon:'⚡', check: s => s.xp >= 500 },
+  { id:'all_today', name:'يوم مثالي', desc:'أنجز كل مهام اليوم', icon:'✨', check: s => checkAllToday(s) }
+];
+
+function getStreakDays(s) {
+  let streak = 0, d = new Date();
+  for(let i = 0; i < 30; i++) {
+    const key = d.toISOString().split('T')[0];
+    if(s.activity[key] && s.activity[key] > 0) streak++;
+    else if(i > 0) break;
+    d.setDate(d.getDate()-1);
+  }
+  return streak;
+}
+
+function checkAllToday(s) {
+  const today = new Date().toISOString().split('T')[0];
+  const todayTasks = s.tasks.filter(t => t.dueDate === today);
+  return todayTasks.length > 0 && todayTasks.every(t => t.done);
+}
+
+// ══════════════════════════════════════════
+//  SAVE
+// ══════════════════════════════════════════
+function save() {
+  localStorage.setItem('tf_state', JSON.stringify(state));
+}
+
+// ══════════════════════════════════════════
+//  XP SYSTEM
+// ══════════════════════════════════════════
+function getCurrentLevel() {
+  let lvl = LEVELS[0];
+  for(const l of LEVELS) { if(state.xp >= l.xpRequired) lvl = l; else break; }
+  return lvl;
+}
+function getNextLevel() {
+  for(let i = 0; i < LEVELS.length; i++) {
+    if(state.xp < LEVELS[i].xpRequired) return LEVELS[i];
+  }
+  return null;
+}
+function getLevelIndex() {
+  let idx = 0;
+  for(let i = 0; i < LEVELS.length; i++) { if(state.xp >= LEVELS[i].xpRequired) idx = i; else break; }
+  return idx;
+}
+
+function gainXP(amount, label) {
+  const prevLevel = getLevelIndex();
+  state.xp += amount;
+  save();
+  const newLevel = getLevelIndex();
+  updateXPUI();
+  if(newLevel > prevLevel) {
+    showToast('🎉 ترقية مستوى! أصبحت ' + LEVELS[newLevel].name + ' ' + LEVELS[newLevel].badge, 'xp');
+    addNotification('🏆 ترقية مستوى!', 'وصلت إلى مستوى ' + LEVELS[newLevel].name + ' ' + LEVELS[newLevel].badge);
+    if(state.settings.sound) setTimeout(playLevelUpSound, 300);
+  }
+}
+
+function updateXPUI() {
+  const lvl = getCurrentLevel();
+  const next = getNextLevel();
+  const xpInLevel = state.xp - lvl.xpRequired;
+  const xpNeeded = next ? (next.xpRequired - lvl.xpRequired) : 1;
+  const pct = next ? Math.min(100, Math.round(xpInLevel / xpNeeded * 100)) : 100;
+
+  document.getElementById('sidebarXP').textContent = state.xp;
+  document.getElementById('sidebarLevel').textContent = lvl.name;
+  document.getElementById('sidebarXPBar').style.width = pct + '%';
+  document.getElementById('xpNext').textContent = next ? (xpInLevel + ' / ' + xpNeeded + ' للمستوى التالي') : 'المستوى الأقصى!';
+  document.getElementById('bigXP').textContent = state.xp;
+  document.getElementById('bigXPBar').style.width = pct + '%';
+  document.getElementById('bigXPNext').textContent = next ? ('المتبقي: ' + (next.xpRequired - state.xp) + ' XP للوصول إلى ' + next.name) : '🎉 وصلت للقمة!';
+  document.getElementById('currentLevelName').textContent = lvl.name;
+  document.getElementById('currentLevelDesc').textContent = lvl.desc;
+  document.getElementById('currentBadge').textContent = lvl.badge;
+}
+
+// ══════════════════════════════════════════
+//  NOTIFICATIONS
+// ══════════════════════════════════════════
+function addNotification(title, sub) {
+  state.notifications.unshift({ id: Date.now(), title, sub, time: new Date().toLocaleTimeString('ar-DZ'), unread: true });
+  if(state.notifications.length > 50) state.notifications.pop();
+  save();
+  updateNotifBadge();
+}
+
+function updateNotifBadge() {
+  const cnt = state.notifications.filter(n => n.unread).length;
+  document.getElementById('notifBadge').textContent = cnt;
+  document.getElementById('notifBadge').style.display = cnt > 0 ? '' : 'none';
+}
+
+function clearNotifications() {
+  state.notifications = [];
+  save();
+  renderNotifications();
+  updateNotifBadge();
+}
+
+function renderNotifications() {
+  const el = document.getElementById('notifList');
+  if(!state.notifications.length) {
+    el.innerHTML = '<div class="empty"><div class="empty-icon">🔕</div><div class="empty-title">لا توجد تنبيهات</div><div class="empty-sub">ستظهر هنا تنبيهات المهام والإنجازات</div></div>';
+    return;
+  }
+  el.innerHTML = state.notifications.map(n => `
+    <div class="notif-item ${n.unread?'unread':''}">
+      <div class="notif-icon">${n.title.split(' ')[0]}</div>
+      <div class="notif-body">
+        <div class="notif-title">${n.title}</div>
+        <div class="notif-time">${n.sub} · ${n.time}</div>
+      </div>
+      ${n.unread ? '<div class="notif-dot"></div>' : ''}
+    </div>
+  `).join('');
+  state.notifications.forEach(n => n.unread = false);
+  save();
+}
+
+// ══════════════════════════════════════════
+//  TASKS
+// ══════════════════════════════════════════
+function getTodayStr() { return new Date().toISOString().split('T')[0]; }
+
+function isOverdue(t) {
+  if(t.done) return false;
+  if(!t.dueDate) return false;
+  const today = getTodayStr();
+  if(t.dueDate < today) return true;
+  if(t.dueDate === today && t.dueTime) {
+    const now = new Date();
+    const [h,m] = t.dueTime.split(':');
+    return now.getHours() > parseInt(h) || (now.getHours() === parseInt(h) && now.getMinutes() > parseInt(m));
+  }
+  return false;
+}
+
+function isToday(t) { return t.dueDate === getTodayStr(); }
+
+function getXPForTask(t) { return t.priority === 'high' ? 25 : t.priority === 'low' ? 5 : 10; }
+
+function addTask() {
+  const title = document.getElementById('newTitle').value.trim();
+  if(!title) { showToast('⚠️ يرجى إدخال عنوان المهمة', 'warning'); return; }
+  const task = {
+    id: Date.now(),
+    title,
+    desc: document.getElementById('newDesc').value.trim(),
+    category: document.getElementById('newCat').value,
+    priority: document.getElementById('newPri').value,
+    dueDate: document.getElementById('newDate').value,
+    dueTime: document.getElementById('newTime').value,
+    done: false,
+    createdAt: Date.now()
+  };
+  state.tasks.unshift(task);
+  save();
+  closeModal();
+  renderAll();
+  showToast('✦ تمت إضافة المهمة بنجاح', 'success');
+  addNotification('📋 مهمة جديدة', 'تمت إضافة: ' + title);
+  document.getElementById('newTitle').value = '';
+  document.getElementById('newDesc').value = '';
+  document.getElementById('newDate').value = '';
+  document.getElementById('newTime').value = '';
+}
+
+// ══════════════════════════════════════════
+//  SOUND SYSTEM (Web Audio API)
+// ══════════════════════════════════════════
+let audioCtx = null;
+
+function getAudioCtx() {
+  if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  return audioCtx;
+}
+
+// رنة إتمام المهمة — صوت فرح صاعد
+function playDoneSound() {
+  try {
+    const ctx = getAudioCtx();
+    const notes = [523, 659, 784, 1047];
+    notes.forEach((freq, i) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain); gain.connect(ctx.destination);
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, ctx.currentTime + i * 0.12);
+      gain.gain.setValueAtTime(0, ctx.currentTime + i * 0.12);
+      gain.gain.linearRampToValueAtTime(0.22, ctx.currentTime + i * 0.12 + 0.04);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.12 + 0.28);
+      osc.start(ctx.currentTime + i * 0.12);
+      osc.stop(ctx.currentTime + i * 0.12 + 0.3);
+    });
+  } catch(e) {}
+}
+
+// رنة إنجاز يوم كامل — صوت احتفالي أطول
+function playAllDoneSound() {
+  try {
+    const ctx = getAudioCtx();
+    const melody = [
+      [523, 0], [659, 0.15], [784, 0.3], [1047, 0.45],
+      [784, 0.65], [1047, 0.8], [1319, 1.0]
+    ];
+    melody.forEach(([freq, t]) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain); gain.connect(ctx.destination);
+      osc.type = 'sine';
+      osc.frequency.value = freq;
+      gain.gain.setValueAtTime(0, ctx.currentTime + t);
+      gain.gain.linearRampToValueAtTime(0.25, ctx.currentTime + t + 0.05);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + t + 0.35);
+      osc.start(ctx.currentTime + t);
+      osc.stop(ctx.currentTime + t + 0.38);
+    });
+    const ping = ctx.createOscillator();
+    const pingGain = ctx.createGain();
+    ping.connect(pingGain); pingGain.connect(ctx.destination);
+    ping.type = 'sine';
+    ping.frequency.value = 2093;
+    pingGain.gain.setValueAtTime(0.15, ctx.currentTime + 1.4);
+    pingGain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1.7);
+    ping.start(ctx.currentTime + 1.4);
+    ping.stop(ctx.currentTime + 1.75);
+  } catch(e) {}
+}
+
+// رنة تنبيه تأخر — صوت تحذيري متكرر
+function playOverdueSound() {
+  try {
+    const ctx = getAudioCtx();
+    [0, 0.35, 0.7].forEach(t => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain); gain.connect(ctx.destination);
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(440, ctx.currentTime + t);
+      osc.frequency.linearRampToValueAtTime(330, ctx.currentTime + t + 0.25);
+      gain.gain.setValueAtTime(0.28, ctx.currentTime + t);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + t + 0.28);
+      osc.start(ctx.currentTime + t);
+      osc.stop(ctx.currentTime + t + 0.3);
+    });
+  } catch(e) {}
+}
+
+// رنة مستوى جديد — فانفار صاعدة
+function playLevelUpSound() {
+  try {
+    const ctx = getAudioCtx();
+    [[392,0,'square'],[494,0.18,'square'],[587,0.36,'square'],[784,0.54,'sine'],[1047,0.75,'sine']].forEach(([freq,t,type]) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain); gain.connect(ctx.destination);
+      osc.type = type;
+      osc.frequency.value = freq;
+      gain.gain.setValueAtTime(0, ctx.currentTime + t);
+      gain.gain.linearRampToValueAtTime(0.2, ctx.currentTime + t + 0.05);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + t + 0.4);
+      osc.start(ctx.currentTime + t);
+      osc.stop(ctx.currentTime + t + 0.42);
+    });
+  } catch(e) {}
+}
+
+function toggleTask(id, event) {
+  event && event.stopPropagation();
+  const task = state.tasks.find(t => t.id === id);
+  if(!task) return;
+  task.done = !task.done;
+
+  if(task.done) {
+    const xp = getXPForTask(task);
+    gainXP(xp, task.title);
+    showXPPop('+' + xp + ' XP ⚡', event);
+    showToast('✅ أحسنت! أنجزت: ' + task.title, 'success');
+    addNotification('✅ مهمة مكتملة', task.title);
+    if(state.settings.sound) playDoneSound();
+    // Track activity
+    const today = getTodayStr();
+    state.activity[today] = (state.activity[today] || 0) + 1;
+    // Check all today done
+    const todayTasks = state.tasks.filter(t => isToday(t));
+    if(todayTasks.length > 0 && todayTasks.every(t => t.done)) {
+      setTimeout(() => {
+        gainXP(50, 'مكافأة يوم مثالي');
+        showToast('🌟 يوم مثالي! +50 XP مكافأة', 'xp');
+        addNotification('🌟 يوم مثالي!', 'أنجزت كل مهام اليوم! +50 XP');
+        if(state.settings.sound) playAllDoneSound();
+      }, 500);
+    }
+    checkAchievements();
+  } else {
+    state.xp = Math.max(0, state.xp - getXPForTask(task));
+    save();
+    updateXPUI();
+  }
+
+  save();
+  renderAll();
+}
+
+function deleteTask(id, event) {
+  event && event.stopPropagation();
+  state.tasks = state.tasks.filter(t => t.id !== id);
+  save();
+  renderAll();
+  showToast('🗑️ تم حذف المهمة', 'warning');
+}
+
+function checkOverdue() {
+  const overdue = state.tasks.filter(t => isOverdue(t));
+  if(!overdue.length) { showToast('✅ لا توجد مهام متأخرة', 'success'); return; }
+  overdue.forEach(t => addNotification('⚠️ مهمة متأخرة!', t.title));
+  showToast('⚠️ لديك ' + overdue.length + ' مهمة متأخرة!', 'warning');
+  if(state.settings.sound) playOverdueSound();
+  renderAll();
+}
+
+// ══════════════════════════════════════════
+//  RENDER HELPERS
+// ══════════════════════════════════════════
+const CAT_LABELS = { work:'💼 عمل', personal:'👤 شخصي', health:'🏃 صحة', study:'📚 دراسة', other:'📌 أخرى' };
+const CAT_COLORS = { work:'var(--accent)', personal:'var(--accent3)', health:'var(--accent5)', study:'var(--accent2)', other:'var(--accent4)' };
+const PRI_LABELS = { high:'عاجلة', med:'متوسطة', low:'منخفضة' };
+
+function formatDateTime(t) {
+  if(!t.dueDate) return '';
+  const d = new Date(t.dueDate + 'T00:00:00');
+  const opts = { weekday:'short', month:'short', day:'numeric' };
+  let s = d.toLocaleDateString('ar-DZ', opts);
+  if(t.dueTime) s += ' · ' + t.dueTime;
+  return s;
+}
+
+function renderTaskItem(task, showNotify) {
+  const overdue = isOverdue(task);
+  const dt = formatDateTime(task);
+  const xp = getXPForTask(task);
+  return `
+    <div class="task-item ${task.done?'done':''} ${overdue?'overdue':''} pri-${task.priority}">
+      <div class="task-check" onclick="toggleTask(${task.id}, event)">${task.done?'✓':''}</div>
+      <div class="task-body">
+        <div class="task-title">${task.title}</div>
+        <div class="task-meta">
+          <span class="task-tag tag-${task.category}">${CAT_LABELS[task.category]}</span>
+          <span class="pri-badge pri-${task.priority}">${PRI_LABELS[task.priority]}</span>
+          ${dt ? `<span class="task-time ${overdue?'overdue':''}">⏰ ${dt}${overdue?' · متأخرة!':''}</span>` : ''}
+          ${!task.done ? `<span class="task-pts">+${xp} XP</span>` : ''}
+        </div>
+      </div>
+      <div class="task-actions">
+        ${showNotify ? `<button class="task-btn notify" onclick="notifyTask(${task.id},event)" title="تذكير">🔔</button>` : ''}
+        <button class="task-btn delete" onclick="deleteTask(${task.id},event)" title="حذف">🗑️</button>
+      </div>
+    </div>
+  `;
+}
+
+function renderAll() {
+  renderDashboard();
+  renderTasksList();
+  renderCharts();
+  renderLevels();
+  renderNotifications();
+  updateStats();
+  updateNotifBadge();
+}
+
+function renderDashboard() {
+  const today = getTodayStr();
+  const todayTasks = state.tasks.filter(t => isToday(t));
+  const overdueTasks = state.tasks.filter(t => isOverdue(t));
+
+  document.getElementById('todayDate').textContent = new Date().toLocaleDateString('ar-DZ', {weekday:'long', year:'numeric', month:'long', day:'numeric'});
+
+  const doneCnt = todayTasks.filter(t=>t.done).length;
+  const pct = todayTasks.length ? Math.round(doneCnt/todayTasks.length*100) : 0;
+  document.getElementById('todayDone').textContent = doneCnt;
+  document.getElementById('todayTotal').textContent = todayTasks.length;
+  document.getElementById('todayBar').style.width = pct + '%';
+  document.getElementById('todayPct').textContent = pct + '%';
+  document.getElementById('todayCount').textContent = todayTasks.length + ' مهام';
+  document.getElementById('overdueCount').textContent = overdueTasks.length + ' مهام';
+
+  const tEl = document.getElementById('todayTasks');
+  tEl.innerHTML = todayTasks.length ? todayTasks.map(t => renderTaskItem(t, true)).join('') :
+    '<div class="empty"><div class="empty-icon">🌤️</div><div class="empty-title">لا توجد مهام لليوم</div><div class="empty-sub">أضف مهام وحدد تاريخ اليوم</div></div>';
+
+  const oEl = document.getElementById('overdueTasks');
+  oEl.innerHTML = overdueTasks.length ? overdueTasks.map(t => renderTaskItem(t, true)).join('') :
+    '<div class="empty"><div class="empty-icon">🎉</div><div class="empty-title">ممتاز! لا مهام متأخرة</div></div>';
+}
+
+function updateStats() {
+  const total = state.tasks.length;
+  const done = state.tasks.filter(t=>t.done).length;
+  const pending = state.tasks.filter(t=>!t.done).length;
+  const overdue = state.tasks.filter(t=>isOverdue(t)).length;
+  const rate = total ? Math.round(done/total*100) : 0;
+
+  document.getElementById('stat-total').textContent = total;
+  document.getElementById('stat-done').textContent = done;
+  document.getElementById('stat-pending').textContent = pending;
+  document.getElementById('stat-overdue').textContent = overdue;
+  document.getElementById('stat-rate').textContent = 'معدل الإنجاز: ' + rate + '%';
+  document.getElementById('totalBadge').textContent = total;
+  document.getElementById('overdueBadge').textContent = overdue;
+  document.getElementById('overdueBadge').style.display = overdue > 0 ? '' : 'none';
+}
+
+function renderTasksList() {
+  const el = document.getElementById('allTasksList');
+  let tasks = [...state.tasks];
+  const today = getTodayStr();
+
+  if(currentFilter === 'today') tasks = tasks.filter(t => isToday(t));
+  else if(currentFilter === 'overdue') tasks = tasks.filter(t => isOverdue(t));
+  else if(currentFilter === 'done') tasks = tasks.filter(t => t.done);
+  else if(['work','personal','health','study'].includes(currentFilter)) tasks = tasks.filter(t => t.category === currentFilter);
+
+  el.innerHTML = tasks.length ? tasks.map(t => renderTaskItem(t, true)).join('') :
+    '<div class="empty"><div class="empty-icon">📭</div><div class="empty-title">لا توجد مهام</div><div class="empty-sub">أضف مهمة جديدة للبدء</div></div>';
+}
+
+// ══════════════════════════════════════════
+//  CHART HELPERS
+// ══════════════════════════════════════════
+function getCSSVar(name) {
+  return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+}
+
+function resolveColor(v) {
+  // If it's a CSS var reference, resolve it
+  if(v.startsWith('var(')) {
+    const name = v.match(/var\(([^)]+)\)/)[1];
+    return getCSSVar(name) || '#888';
+  }
+  return v;
+}
+
+// Animated donut on canvas
+function drawDonut(canvasId, segments, total, centerLabel) {
+  const canvas = document.getElementById(canvasId);
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  const cx = W/2, cy = H/2, r = 60, inner = 38;
+  ctx.clearRect(0, 0, W, H);
+
+  if(total === 0) {
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, 0, Math.PI*2);
+    ctx.strokeStyle = 'rgba(255,255,255,0.07)';
+    ctx.lineWidth = r - inner;
+    ctx.stroke();
+  } else {
+    let start = -Math.PI/2;
+    segments.forEach(seg => {
+      if(seg.value <= 0) return;
+      const angle = (seg.value / total) * Math.PI * 2;
+      const color = resolveColor(seg.color);
+      // Shadow glow
+      ctx.save();
+      ctx.shadowColor = color;
+      ctx.shadowBlur = 12;
+      ctx.beginPath();
+      ctx.arc(cx, cy, (r+inner)/2, start, start+angle);
+      ctx.strokeStyle = color;
+      ctx.lineWidth = r - inner;
+      ctx.lineCap = 'round';
+      ctx.stroke();
+      ctx.restore();
+      start += angle;
+    });
+  }
+
+  // Center text
+  ctx.textAlign = 'center';
+  ctx.fillStyle = '#e8ecf5';
+  ctx.font = 'bold 22px Cairo';
+  ctx.fillText(centerLabel, cx, cy + 4);
+  ctx.fillStyle = 'rgba(232,236,245,0.4)';
+  ctx.font = '11px Cairo';
+  ctx.fillText('مهمة', cx, cy + 20);
+}
+
+// Smooth line chart with gradient fill
+function drawLineChart(canvasId, labels, values, color) {
+  const canvas = document.getElementById(canvasId);
+  if(!canvas) return;
+  canvas.width = canvas.offsetWidth || canvas.parentElement.offsetWidth || 600;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  const pad = { top:24, right:20, bottom:32, left:36 };
+  const chartW = W - pad.left - pad.right;
+  const chartH = H - pad.top - pad.bottom;
+  ctx.clearRect(0, 0, W, H);
+
+  const maxV = Math.max(...values, 1);
+  const n = values.length;
+  const resolvedColor = resolveColor(color);
+
+  const xOf = i => pad.left + (i / (n-1)) * chartW;
+  const yOf = v => pad.top + chartH - (v / maxV) * chartH;
+
+  // Grid lines
+  ctx.strokeStyle = 'rgba(255,255,255,0.05)';
+  ctx.lineWidth = 1;
+  for(let i = 0; i <= 4; i++) {
+    const y = pad.top + (chartH / 4) * i;
+    ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(W - pad.right, y); ctx.stroke();
+  }
+
+  // Gradient fill
+  const grad = ctx.createLinearGradient(0, pad.top, 0, pad.top + chartH);
+  grad.addColorStop(0, resolvedColor.replace(')', ', 0.35)').replace('rgb(', 'rgba(').replace('#', 'rgba(').replace(/rgba\(([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2}), 0\.35\)/, (m,r,g,b) => `rgba(${parseInt(r,16)},${parseInt(g,16)},${parseInt(b,16)},0.35)`));
+  grad.addColorStop(1, 'rgba(0,0,0,0)');
+
+  // Draw smooth curve area
+  ctx.beginPath();
+  ctx.moveTo(xOf(0), yOf(values[0]));
+  for(let i = 1; i < n; i++) {
+    const cpx = (xOf(i-1) + xOf(i)) / 2;
+    ctx.bezierCurveTo(cpx, yOf(values[i-1]), cpx, yOf(values[i]), xOf(i), yOf(values[i]));
+  }
+  ctx.lineTo(xOf(n-1), pad.top + chartH);
+  ctx.lineTo(xOf(0), pad.top + chartH);
+  ctx.closePath();
+  ctx.fillStyle = grad;
+  ctx.fill();
+
+  // Draw line
+  ctx.beginPath();
+  ctx.moveTo(xOf(0), yOf(values[0]));
+  for(let i = 1; i < n; i++) {
+    const cpx = (xOf(i-1) + xOf(i)) / 2;
+    ctx.bezierCurveTo(cpx, yOf(values[i-1]), cpx, yOf(values[i]), xOf(i), yOf(values[i]));
+  }
+  ctx.strokeStyle = resolvedColor;
+  ctx.lineWidth = 2.5;
+  ctx.shadowColor = resolvedColor;
+  ctx.shadowBlur = 8;
+  ctx.stroke();
+  ctx.shadowBlur = 0;
+
+  // Dots + values
+  values.forEach((v, i) => {
+    if(v > 0) {
+      ctx.beginPath();
+      ctx.arc(xOf(i), yOf(v), 5, 0, Math.PI*2);
+      ctx.fillStyle = resolvedColor;
+      ctx.shadowColor = resolvedColor;
+      ctx.shadowBlur = 10;
+      ctx.fill();
+      ctx.shadowBlur = 0;
+      ctx.fillStyle = '#e8ecf5';
+      ctx.font = 'bold 10px Cairo';
+      ctx.textAlign = 'center';
+      ctx.fillText(v, xOf(i), yOf(v) - 10);
+    }
+  });
+
+  // Labels
+  ctx.fillStyle = 'rgba(232,236,245,0.4)';
+  ctx.font = '10px Cairo';
+  ctx.textAlign = 'center';
+  labels.forEach((l, i) => ctx.fillText(l, xOf(i), H - 8));
+}
+
+// Grouped bar chart
+function drawGroupedBar(canvasId, labels, data1, data2, color1, color2) {
+  const canvas = document.getElementById(canvasId);
+  if(!canvas) return;
+  canvas.width = canvas.offsetWidth || canvas.parentElement.offsetWidth || 600;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  const pad = { top:24, right:16, bottom:36, left:36 };
+  const chartW = W - pad.left - pad.right;
+  const chartH = H - pad.top - pad.bottom;
+  ctx.clearRect(0, 0, W, H);
+
+  const allVals = [...data1, ...data2];
+  const maxV = Math.max(...allVals, 1);
+  const n = labels.length;
+  const groupW = chartW / n;
+  const barW = Math.min(groupW * 0.32, 24);
+  const c1 = resolveColor(color1), c2 = resolveColor(color2);
+
+  // Grid
+  ctx.strokeStyle = 'rgba(255,255,255,0.05)';
+  ctx.lineWidth = 1;
+  for(let i = 0; i <= 4; i++) {
+    const y = pad.top + (chartH/4)*i;
+    ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(W-pad.right, y); ctx.stroke();
+  }
+
+  labels.forEach((lbl, i) => {
+    const groupX = pad.left + i * groupW + groupW/2;
+
+    // Bar 1 (added)
+    const h1 = (data1[i]/maxV)*chartH;
+    const grad1 = ctx.createLinearGradient(0, pad.top+chartH-h1, 0, pad.top+chartH);
+    grad1.addColorStop(0, c1); grad1.addColorStop(1, c1+'88');
+    ctx.fillStyle = grad1;
+    ctx.shadowColor = c1; ctx.shadowBlur = 8;
+    roundRect(ctx, groupX - barW - 2, pad.top+chartH-h1, barW, h1, 4);
+    ctx.shadowBlur = 0;
+
+    // Bar 2 (done)
+    const h2 = (data2[i]/maxV)*chartH;
+    const grad2 = ctx.createLinearGradient(0, pad.top+chartH-h2, 0, pad.top+chartH);
+    grad2.addColorStop(0, c2); grad2.addColorStop(1, c2+'88');
+    ctx.fillStyle = grad2;
+    ctx.shadowColor = c2; ctx.shadowBlur = 8;
+    roundRect(ctx, groupX + 2, pad.top+chartH-h2, barW, h2, 4);
+    ctx.shadowBlur = 0;
+
+    // Values
+    ctx.fillStyle = '#e8ecf5'; ctx.font = 'bold 10px Cairo'; ctx.textAlign = 'center';
+    if(data1[i]>0) ctx.fillText(data1[i], groupX - barW/2 - 2, pad.top+chartH-h1-6);
+    if(data2[i]>0) ctx.fillText(data2[i], groupX + barW/2 + 2, pad.top+chartH-h2-6);
+
+    // Label
+    ctx.fillStyle = 'rgba(232,236,245,0.45)'; ctx.font = '10px Cairo';
+    ctx.fillText(lbl, groupX, H-8);
+  });
+}
+
+function roundRect(ctx, x, y, w, h, r) {
+  if(h <= 0) return;
+  r = Math.min(r, h/2, w/2);
+  ctx.beginPath();
+  ctx.moveTo(x+r, y);
+  ctx.lineTo(x+w-r, y);
+  ctx.quadraticCurveTo(x+w, y, x+w, y+r);
+  ctx.lineTo(x+w, y+h);
+  ctx.lineTo(x, y+h);
+  ctx.lineTo(x, y+r);
+  ctx.quadraticCurveTo(x, y, x+r, y);
+  ctx.closePath();
+  ctx.fill();
+}
+
+// Horizontal bar chart
+function drawHBar(canvasId, labels, values, colors) {
+  const canvas = document.getElementById(canvasId);
+  if(!canvas) return;
+  canvas.width = canvas.offsetWidth || canvas.parentElement.offsetWidth || 400;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  ctx.clearRect(0, 0, W, H);
+
+  const n = labels.length;
+  const rowH = H / n;
+  const labelW = 70;
+  const maxV = Math.max(...values, 1);
+  const barMaxW = W - labelW - 50;
+
+  values.forEach((v, i) => {
+    const y = i * rowH + rowH*0.2;
+    const bH = rowH * 0.55;
+    const bW = (v / maxV) * barMaxW;
+    const color = resolveColor(colors[i]);
+
+    // Label
+    ctx.fillStyle = 'rgba(232,236,245,0.6)';
+    ctx.font = 'bold 12px Cairo';
+    ctx.textAlign = 'right';
+    ctx.fillText(labels[i], labelW - 8, y + bH*0.7);
+
+    // BG bar
+    ctx.fillStyle = 'rgba(255,255,255,0.05)';
+    roundRect(ctx, labelW, y, barMaxW, bH, 6);
+
+    // Filled bar
+    if(bW > 0) {
+      const grad = ctx.createLinearGradient(labelW, 0, labelW+bW, 0);
+      grad.addColorStop(0, color);
+      grad.addColorStop(1, color+'99');
+      ctx.fillStyle = grad;
+      ctx.shadowColor = color; ctx.shadowBlur = 10;
+      roundRect(ctx, labelW, y, bW, bH, 6);
+      ctx.shadowBlur = 0;
+    }
+
+    // Value
+    ctx.fillStyle = '#e8ecf5';
+    ctx.font = 'bold 12px Cairo';
+    ctx.textAlign = 'left';
+    ctx.fillText(v, labelW + bW + 8, y + bH*0.7);
+  });
+}
+
+// ══════════════════════════════════════════
+//  CHARTS
+// ══════════════════════════════════════════
+function renderCharts() {
+  const accentColor = 'var(--accent)';
+  const cats = ['work','personal','health','study','other'];
+  const catColors = ['var(--accent)','var(--accent3)','var(--accent5)','var(--accent2)','var(--accent4)'];
+  const catNames = ['💼 عمل','👤 شخصي','🏃 صحة','📚 دراسة','📌 أخرى'];
+
+  // ── DONUT: category
+  const catCounts = cats.map(c => state.tasks.filter(t=>t.category===c).length);
+  const totalTasks = catCounts.reduce((a,b)=>a+b,0);
+  drawDonut('donutCat',
+    cats.map((c,i) => ({value: catCounts[i], color: catColors[i]})),
+    totalTasks, totalTasks
+  );
+  document.getElementById('donutLegend').innerHTML = cats.map((c,i) => `
+    <div class="legend-item">
+      <div class="legend-dot" style="background:${catColors[i]}"></div>
+      <div class="legend-name">${catNames[i]}</div>
+      <div class="legend-val">${catCounts[i]}</div>
+    </div>`).join('');
+
+  // ── DONUT: status
+  const done = state.tasks.filter(t=>t.done).length;
+  const overdue = state.tasks.filter(t=>isOverdue(t)).length;
+  const pending = state.tasks.filter(t=>!t.done&&!isOverdue(t)).length;
+  const total2 = done + overdue + pending;
+  drawDonut('donutStatus', [
+    {value:done, color:'var(--accent3)'},
+    {value:pending, color:'var(--accent5)'},
+    {value:overdue, color:'var(--accent4)'}
+  ], total2, total2);
+  document.getElementById('statusLegend').innerHTML = `
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent3)"></div><div class="legend-name">مكتملة</div><div class="legend-val" style="color:var(--accent3)">${done}</div></div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent5)"></div><div class="legend-name">قيد التنفيذ</div><div class="legend-val" style="color:var(--accent5)">${pending}</div></div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent4)"></div><div class="legend-name">متأخرة</div><div class="legend-val" style="color:var(--accent4)">${overdue}</div></div>`;
+
+  // ── LINE CHART: XP per day last 14 days
+  const today = new Date();
+  const lineLabels = [], lineVals = [];
+  let totalXP = 0;
+  const dayNames = ['أحد','إثن','ثلا','أرب','خمي','جمع','سبت'];
+  for(let i = 13; i >= 0; i--) {
+    const d = new Date(today); d.setDate(today.getDate()-i);
+    const key = d.toISOString().split('T')[0];
+    const cnt = state.activity[key] || 0;
+    const xpDay = cnt * 10;
+    totalXP += xpDay;
+    lineLabels.push(i===0 ? 'اليوم' : dayNames[d.getDay()]);
+    lineVals.push(xpDay);
+  }
+  document.getElementById('lineXPTotal').textContent = state.xp;
+  setTimeout(() => drawLineChart('lineChart', lineLabels, lineVals, 'var(--accent)'), 50);
+
+  // ── GROUPED BAR: week added vs done
+  const weekLabels = [], weekAdded = [], weekDone = [];
+  for(let i = 6; i >= 0; i--) {
+    const d = new Date(today); d.setDate(today.getDate()-i);
+    const key = d.toISOString().split('T')[0];
+    weekLabels.push(i===0?'اليوم':dayNames[d.getDay()]);
+    weekAdded.push(state.tasks.filter(t=>t.createdAt && new Date(t.createdAt).toISOString().split('T')[0]===key).length);
+    weekDone.push(state.activity[key]||0);
+  }
+  setTimeout(() => drawGroupedBar('barChart', weekLabels, weekAdded, weekDone, 'var(--accent)', 'var(--accent3)'), 50);
+
+  // ── HORIZONTAL BAR: priority
+  const priHigh = state.tasks.filter(t=>t.priority==='high').length;
+  const priMed  = state.tasks.filter(t=>t.priority==='med').length;
+  const priLow  = state.tasks.filter(t=>t.priority==='low').length;
+  setTimeout(() => drawHBar('hbarChart',
+    ['عاجلة 🔴','متوسطة 🟡','منخفضة 🟢'],
+    [priHigh, priMed, priLow],
+    ['var(--accent4)','var(--accent5)','var(--accent3)']
+  ), 50);
+
+  // ── STREAK GRID
+  const sg = document.getElementById('streakGrid');
+  const cells = [];
+  const todayStr = getTodayStr();
+  for(let i = 27; i >= 0; i--) {
+    const d = new Date(today); d.setDate(today.getDate()-i);
+    const key = d.toISOString().split('T')[0];
+    const isT = key === todayStr;
+    const hasDone = state.activity[key] && state.activity[key] > 0;
+    const hasTasks = state.tasks.some(t=>t.dueDate===key);
+    cells.push(`<div class="streak-day ${hasDone?'completed':hasTasks?'has-tasks':''} ${isT?'today':''}" title="${key}: ${state.activity[key]||0} منجزة">${d.getDate()}</div>`);
+  }
+  sg.innerHTML = cells.join('');
+}
+// ══════════════════════════════════════════
+//  LEVELS
+// ══════════════════════════════════════════
+function renderLevels() {
+  updateXPUI();
+  const currentIdx = getLevelIndex();
+  const grid = document.getElementById('levelsGrid');
+  grid.innerHTML = LEVELS.map((l,i) => {
+    const unlocked = i <= currentIdx;
+    const current = i === currentIdx;
+    return `<div class="level-card ${current?'current':unlocked?'unlocked':'locked'}">
+      <div class="level-badge">${l.badge}</div>
+      <div class="level-name">${l.name}</div>
+      <div class="level-req">${l.desc}</div>
+      <div class="level-xp">${l.xpRequired} XP</div>
+      <span class="level-status ${current?'status-current':unlocked?'status-done':'status-locked'}">${current?'المستوى الحالي':unlocked?'✓ مكتسب':'🔒 مغلق'}</span>
+    </div>`;
+  }).join('');
+
+  const ag = document.getElementById('achievementsGrid');
+  ag.innerHTML = ACHIEVEMENTS.map(a => {
+    const unlocked = a.check(state);
+    return `<div class="ach-card ${unlocked?'unlocked':'locked'}">
+      <div class="ach-icon">${a.icon}</div>
+      <div class="ach-name">${a.name}</div>
+      <div class="ach-desc">${a.desc}</div>
+    </div>`;
+  }).join('');
+}
+
+function checkAchievements() {
+  ACHIEVEMENTS.forEach(a => {
+    if(a.check(state)) {
+      const key = 'ach_' + a.id;
+      if(!localStorage.getItem(key)) {
+        localStorage.setItem(key, '1');
+        showToast('🏅 إنجاز جديد: ' + a.name + ' ' + a.icon, 'xp');
+        addNotification('🏅 إنجاز جديد!', a.name + ': ' + a.desc);
+      }
+    }
+  });
+}
+
+// ══════════════════════════════════════════
+//  UI
+// ══════════════════════════════════════════
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+
+  const titles = { dashboard:'لوحة <span>التحكم</span>', tasks:'كل <span>المهام</span>', charts:'<span>الإحصائيات</span>', levels:'المستويات <span>والإنجازات</span>', notifications:'مركز <span>التنبيهات</span>', settings:'<span>الإعدادات</span>' };
+  document.getElementById('pageTitle').innerHTML = titles[name] || name;
+
+  // Mark active nav
+  const navItems = document.querySelectorAll('.nav-item');
+  navItems.forEach(item => {
+    if(item.getAttribute('onclick') && item.getAttribute('onclick').includes("'"+name+"'")) item.classList.add('active');
+  });
+
+  if(name === 'notifications') renderNotifications();
+  if(name === 'charts') renderCharts();
+  if(name === 'levels') renderLevels();
+}
+
+function setFilter(f) {
+  currentFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  const btns = document.querySelectorAll('.filter-btn');
+  btns.forEach(b => { if(b.getAttribute('onclick') && b.getAttribute('onclick').includes("'"+f+"'")) b.classList.add('active'); });
+  renderTasksList();
+}
+
+function openAddModal() {
+  document.getElementById('addModal').classList.add('active');
+  document.getElementById('newDate').value = getTodayStr();
+  setTimeout(() => document.getElementById('newTitle').focus(), 100);
+}
+
+function closeModal() {
+  document.getElementById('addModal').classList.remove('active');
+}
+
+document.getElementById('addModal').addEventListener('click', function(e) {
+  if(e.target === this) closeModal();
+});
+
+document.addEventListener('keydown', e => {
+  if(e.key === 'Escape') closeModal();
+  if(e.ctrlKey && e.key === 'n') { e.preventDefault(); openAddModal(); }
+});
+
+function notifyTask(id, event) {
+  event && event.stopPropagation();
+  const task = state.tasks.find(t => t.id === id);
+  if(!task) return;
+  addNotification('🔔 تذكير', task.title);
+  showToast('🔔 تم تعيين تذكير للمهمة', 'success');
+}
+
+function showToast(msg, type = 'success') {
+  const el = document.createElement('div');
+  el.className = 'toast ' + type;
+  el.innerHTML = msg;
+  document.getElementById('toastContainer').appendChild(el);
+  setTimeout(() => el.remove(), 3500);
+}
+
+function showXPPop(text, event) {
+  const el = document.createElement('div');
+  el.className = 'xp-pop';
+  el.textContent = text;
+  const x = event ? event.clientX : window.innerWidth/2;
+  const y = event ? event.clientY : window.innerHeight/2;
+  el.style.left = (x - 30) + 'px';
+  el.style.top = (y - 10) + 'px';
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 1500);
+}
+
+function clearCompleted() {
+  state.tasks = state.tasks.filter(t => !t.done);
+  save();
+  renderAll();
+  showToast('🗑️ تم حذف المهام المكتملة', 'warning');
+}
+
+function resetAll() {
+  if(!confirm('هل أنت متأكد؟ سيتم حذف جميع البيانات!')) return;
+  state = { tasks:[], xp:0, notifications:[], settings:{overdueAlerts:true,dailySummary:true,sound:true}, activity:{} };
+  ACHIEVEMENTS.forEach(a => localStorage.removeItem('ach_'+a.id));
+  save();
+  renderAll();
+  showToast('🔄 تم إعادة تعيين كل البيانات', 'warning');
+}
+
+function toggleSetting(key) {
+  state.settings[key] = !state.settings[key];
+  save();
+  const map = { overdueAlerts:'tog1', dailySummary:'tog2', sound:'tog3' };
+  const el = document.getElementById(map[key]);
+  if(el) el.classList.toggle('on', state.settings[key]);
+}
+
+// ══════════════════════════════════════════
+//  AUTO CHECK OVERDUE EVERY MINUTE
+// ══════════════════════════════════════════
+setInterval(() => {
+  if(state.settings.overdueAlerts) {
+    const overdue = state.tasks.filter(t => isOverdue(t));
+    let newWarning = false;
+    overdue.forEach(t => {
+      const key = 'warned_' + t.id + '_' + getTodayStr();
+      if(!sessionStorage.getItem(key)) {
+        sessionStorage.setItem(key, '1');
+        addNotification('⚠️ مهمة متأخرة!', t.title);
+        newWarning = true;
+      }
+    });
+    if(newWarning && state.settings.sound) playOverdueSound();
+    updateNotifBadge();
+  }
+}, 60000);
+
+// ══════════════════════════════════════════
+//  THEME SYSTEM
+// ══════════════════════════════════════════
+const THEME_LABELS = {
+  '': '🔵 أزرق (افتراضي)',
+  'pink': '🌸 وردي',
+  'purple': '🟣 بنفسجي',
+  'cyan': '🩵 سماوي',
+  'green': '🟢 أخضر',
+  'orange': '🟠 برتقالي',
+  'gold': '🌟 ذهبي',
+  'white': '☁️ أبيض',
+  'rose': '🌸 وردي + أبيض',
+  'mint': '🌿 نعناعي'
+};
+
+function applyTheme(theme) {
+  // Remove all theme classes
+  document.body.className = document.body.className.replace(/theme-\S+/g, '').trim();
+  if(theme) document.body.classList.add('theme-' + theme);
+  state.settings.theme = theme;
+  save();
+
+  // Update dots
+  document.querySelectorAll('.theme-dot').forEach(d => {
+    d.classList.toggle('active', d.dataset.theme === theme);
+  });
+
+  const label = document.getElementById('themeLabel');
+  if(label) label.textContent = THEME_LABELS[theme] || THEME_LABELS[''];
+  showToast('🎨 تم تغيير اللون إلى ' + (THEME_LABELS[theme] || THEME_LABELS['']), 'success');
+}
+
+function initThemeSwitcher() {
+  document.querySelectorAll('.theme-dot').forEach(dot => {
+    dot.addEventListener('click', () => applyTheme(dot.dataset.theme));
+  });
+  // Apply saved theme
+  const saved = state.settings.theme || '';
+  if(saved) applyTheme(saved);
+  // Update label
+  const label = document.getElementById('themeLabel');
+  if(label) label.textContent = THEME_LABELS[saved] || THEME_LABELS[''];
+  document.querySelectorAll('.theme-dot').forEach(d => {
+    d.classList.toggle('active', d.dataset.theme === saved);
+  });
+}
+
+
+function init() {
+  // Sample tasks if empty
+  if(state.tasks.length === 0) {
+    const today = getTodayStr();
+    const yesterday = new Date(); yesterday.setDate(yesterday.getDate()-1);
+    const yStr = yesterday.toISOString().split('T')[0];
+    state.tasks = [
+      { id:1, title:'مراجعة تقرير المحاسبة', desc:'', category:'study', priority:'high', dueDate:today, dueTime:'10:00', done:false, createdAt:Date.now() },
+      { id:2, title:'تمرين رياضي صباحي', desc:'30 دقيقة جري', category:'health', priority:'med', dueDate:today, dueTime:'07:00', done:true, createdAt:Date.now() },
+      { id:3, title:'الرد على رسائل البريد', desc:'', category:'work', priority:'med', dueDate:today, dueTime:'', done:false, createdAt:Date.now() },
+      { id:4, title:'شراء مستلزمات المنزل', desc:'', category:'personal', priority:'low', dueDate:yStr, dueTime:'18:00', done:false, createdAt:Date.now()-86400000 },
+      { id:5, title:'مطالعة كتاب المحاسبة العامة', desc:'', category:'study', priority:'med', dueDate:today, dueTime:'', done:false, createdAt:Date.now() },
+    ];
+    state.xp = 10;
+    state.activity[today] = 1;
+  }
+
+  // Apply settings toggles
+  const map = { overdueAlerts:'tog1', dailySummary:'tog2', sound:'tog3' };
+  Object.keys(map).forEach(k => {
+    const el = document.getElementById(map[k]);
+    if(el) el.classList.toggle('on', state.settings[k]);
+  });
+
+  save();
+  renderAll();
+  initThemeSwitcher();
+  showPage('dashboard');
+
+  setTimeout(() => {
+    if(state.settings.overdueAlerts) checkOverdue();
+  }, 1500);
+}
+
+init();
+</script>
+</body>
+</html>
